@@ -35,22 +35,18 @@ cd /tomli
 pip3 install .
 rm -rf build
 
-cd /yaml-0.2.5
-CC=afl-clang-fast ./configure
-make install -j`nproc`
-
-cd /PyYAML-5.3.1
-CC=afl-clang-fast python3 setup.py --with-libyaml install
-pip3 install --ignore-installed .
-rm -rf build
+#cd /yaml-0.2.5
+#CC=afl-clang-fast ./configure
+#make install -j`nproc`
 
 cd /msgspec
 
-MSGSPEC_DEBUG=1 CC=afl-clang-fast CFLAGS="-fsanitize=address -Wl,-rpath=/usr/lib/clang/14.0.6/lib/linux/" LDFLAGS="/usr/local/lib/afl/afl-compiler-rt.o /usr/lib/clang/14.0.6/lib/linux/libclang_rt.asan-x86_64.so" LDSHARED="clang -shared" pip3 install --ignore-installed .
+MSGSPEC_DEBUG=1 CC=afl-clang-fast CFLAGS="-fsanitize=address -Wl,-rpath=/usr/lib/clang/14.0.6/lib/linux/" LDFLAGS="/usr/local/lib/afl/afl-compiler-rt.o /usr/lib/clang/14.0.6/lib/linux/libclang_rt.asan-aarch64.so" LDSHARED="clang -shared" pip3 install --ignore-installed .
 rm -rf build
 
 deactivate
 
+exit
 
 # Prepare Atheris venv
 source /atherisVenv/bin/activate
@@ -79,3 +75,4 @@ cd /msgspec
 MSGSPEC_DEBUG=1 CC=clang CFLAGS="-g -fsanitize=fuzzer-no-link,address" LDSHARED="clang -shared" pip3 install --ignore-installed .
 
 deactivate
+

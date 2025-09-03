@@ -14,7 +14,7 @@
 #
 ################################################################################
 
-ARG BASE_IMAGE="sydr/ubuntu20.04-sydr-fuzz"
+ARG BASE_IMAGE="sydr/ubuntu20.04-aarch64-sydr-fuzz"
 FROM $BASE_IMAGE
 
 RUN pip install flit
@@ -41,10 +41,11 @@ RUN tar -xvf PyYAML-5.3.1.tar.gz && rm PyYAML-5.3.1.tar.gz
 
 WORKDIR /msgspec
 
-RUN git checkout 403902c208e06081aa832dbdd978f3e2ad50342d
+RUN git checkout bc60e96772c5e8a3babff967d86a9e7dfcdbfb1b
 
 RUN apt install python3.9-venv
 
 COPY *.dict fuzz_*.py build.sh /
 
 RUN /build.sh
+
