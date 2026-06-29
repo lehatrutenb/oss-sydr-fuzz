@@ -14,12 +14,21 @@
 // limitations under the License.
 //
 ///////////////////////////////////////////////////////////////////////////
-import com.code_intelligence.jazzer.api.FuzzedDataProvider;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import me.xdrop.diffutils.DiffUtils;
 
 public class DiffUtilsFuzzer {
-  public static void fuzzerTestOneInput(byte[] data) {
-    String input = new String(data);
+  public static void main(String[] args) {
+      try {
+        fuzzerTestOneInput(Files.readString(Path.of(args[0])));
+      } catch (IOException e) {
+        return;
+      }
+  }
+  public static void fuzzerTestOneInput(String input) {
     DiffUtils.getMatchingBlocks(
       input.substring(0, input.length() / 2), input.substring(input.length() / 2));
   }

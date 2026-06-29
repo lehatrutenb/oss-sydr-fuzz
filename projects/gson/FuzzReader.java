@@ -15,13 +15,22 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 
 public class FuzzReader {
-  public static void fuzzerTestOneInput(byte[] data) {
-    String input = new String(data);
+  public static void main(String[] args) {
+      try {
+        fuzzerTestOneInput(Files.readString(Path.of(args[0])));
+      } catch (IOException e) {
+        return;
+      }
+  }
+  public static void fuzzerTestOneInput(String input) {
     TypeAdapter<JsonElement> adapter = new Gson().getAdapter(JsonElement.class);
     boolean lenient = false;
     JsonReader reader = new JsonReader(new StringReader(input));

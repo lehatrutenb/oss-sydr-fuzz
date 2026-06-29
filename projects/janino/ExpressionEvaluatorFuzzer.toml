@@ -17,3 +17,18 @@
 [jazzer]
 target_class = "ExpressionEvaluatorFuzzer"
 args = "--cp=/out:/out/janino.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/corpus"
+
+[swat]
+java = "/jdk/build/linux-x86_64-server-release/images/jdk/bin/java"
+swat = "/fuzz/SWAT"
+
+[swat.config]
+logging.classes="false"
+logging.level="INFO"
+
+instrumentation.transformer="PARAMETER"
+instrumentation.parameter.symbolicPattern="ExpressionEvaluatorFuzzer:fuzzerTestOneInput"
+instrumentation.includePackages="ExpressionEvaluatorFuzzer:org/codehaus/janino:org/codehaus:org/codehaus/commons"
+
+solver.solver="CVC5"
+solver.timeoutMS="10000"

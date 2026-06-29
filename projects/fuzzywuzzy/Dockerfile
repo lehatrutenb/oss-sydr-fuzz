@@ -29,3 +29,5 @@ ENV CASR_SOURCE_DIRS /fuzzywuzzy/diffutils/src/:/fuzzywuzzy/src/
 WORKDIR /fuzzywuzzy
 RUN git checkout e8376dfdc1c0cb72f7924f3a347bfcd39855dbeb
 RUN /fuzzywuzzy/build.sh
+
+ENV PATH=${PATH}:/fuzz/SWAT

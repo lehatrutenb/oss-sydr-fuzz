@@ -18,12 +18,12 @@ SRC=/src
 OUT=/out
 
 # Get maven
-wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.tar.gz
+wget https://dlcdn.apache.org/maven/maven-3/3.9.16/binaries/apache-maven-3.9.16-bin.tar.gz
 tar -xvf apache-maven-*-bin.tar.gz
 rm apache-maven-*-bin.tar.gz
 mv apache-maven-* /opt/
 
-MVN=/opt/apache-maven-3.9.4/bin/mvn
+MVN=/opt/apache-maven-3.9.16/bin/mvn
 cd janino-parent
 MAVEN_ARGS="-DskipTests -Djavac.src.version=17 -Djavac.target.version=17 -Dmaven.javadoc.skip=true"
 $MVN package org.apache.maven.plugins:maven-shade-plugin:3.2.4:shade $MAVEN_ARGS

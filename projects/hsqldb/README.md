@@ -4,7 +4,7 @@ HSQLDB (HyperSQL DataBase) is the leading SQL relational database system written
 
 ## Build Docker
 
-    $ sudo docker build -t oss-sydr-fuzz-hsqldb .
+    $ sudo docker build --build-arg BASE_IMAGE=swat-playground-22 -t oss-sydr-fuzz-hsqldb .
 
 ## Run Hybrid Fuzzing
 

@@ -4,7 +4,7 @@ Joda-Time provides a quality replacement for the Java date and time classes.
 
 ## Build Docker
 
-    $ sudo docker build -t oss-sydr-fuzz-joda-time .
+    $ sudo docker build --build-arg BASE_IMAGE=swat-playground-22 -t oss-sydr-fuzz-joda-time .
 
 ## Run Hybrid Fuzzing
 

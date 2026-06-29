@@ -4,7 +4,7 @@ Given JSON-like content, The JSON Sanitizer converts it to valid JSON.
 
 ## Build Docker
 
-    $ sudo docker build -t oss-sydr-fuzz-json-sanitizer .
+    $ sudo docker build --build-arg BASE_IMAGE=swat-playground-22 -t oss-sydr-fuzz-json-sanitizer .
 
 ## Run Hybrid Fuzzing
 

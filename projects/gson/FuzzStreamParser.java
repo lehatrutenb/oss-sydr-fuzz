@@ -1,4 +1,5 @@
 // Copyright 2021 Google LLC
+// Modifications copyright (C) 2025 ISP RAS
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,18 +14,26 @@
 // limitations under the License.
 //
 ////////////////////////////////////////////////////////////////////////////////
-import com.code_intelligence.jazzer.api.FuzzedDataProvider;
-
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import com.google.gson.*;
 
 public class FuzzStreamParser {
-  public static void fuzzerTestOneInput(FuzzedDataProvider data) {
+  public static void main(String[] args) {
+      try {
+        fuzzerTestOneInput(Files.readString(Path.of(args[0])));
+      } catch (IOException e) {
+        return;
+      }
+  }
+  public static void fuzzerTestOneInput(String input) {
     try {
-      JsonStreamParser parser = new JsonStreamParser(data.consumeRemainingAsString());
+      JsonStreamParser parser = new JsonStreamParser(input);
       JsonElement element;
       while (parser.hasNext() == true) {
-        // We do not catch NoSuchElementException here as we 
+        // We do not catch NoSuchElementException here as we
         // have just checked an element exists.
         element = parser.next();
       }

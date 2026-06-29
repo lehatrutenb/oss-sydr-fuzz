@@ -4,7 +4,7 @@ Gson is a Java library that can be used to convert Java Objects into their JSON 
 
 ## Build Docker
 
-    $ sudo docker build -t oss-sydr-fuzz-gson .
+    $ sudo docker build --build-arg BASE_IMAGE=swat-playground-22 -t oss-sydr-fuzz-gson .
 
 ## Run Hybrid Fuzzing
 

@@ -1,5 +1,3 @@
-import com.code_intelligence.jazzer.api.FuzzedDataProvider;
-import com.code_intelligence.jazzer.api.FuzzerSecurityIssueHigh;
 import org.hsqldb.server.Server;
 import org.hsqldb.server.ServerConstants;
 import java.io.PrintWriter;

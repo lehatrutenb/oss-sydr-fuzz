@@ -4,6 +4,8 @@ Janino is a super-small, super-fast Java compiler.
 
 ## Build Docker
 
+sudo docker build --build-arg BASE_IMAGE=swat-playground-22 -t oss-sydr-fuzz-janino 
+
     $ sudo docker build -t oss-sydr-fuzz-janino .
 
 ## Run Hybrid Fuzzing

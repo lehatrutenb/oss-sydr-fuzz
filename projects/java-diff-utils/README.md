@@ -4,7 +4,7 @@ Diff Utils library is an OpenSource library for performing the comparison operat
 
 ## Build Docker
 
-    $ sudo docker build -t oss-sydr-fuzz-java-diff-utils .
+    $ sudo docker build --build-arg BASE_IMAGE=swat-playground-22 -t oss-sydr-fuzz-java-diff-utils .
 
 ## Run Hybrid Fuzzing
 

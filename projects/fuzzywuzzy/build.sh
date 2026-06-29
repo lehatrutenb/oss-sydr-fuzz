@@ -18,12 +18,12 @@ SRC=/src
 OUT=/out
 
 # Get maven
-wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.tar.gz
+wget https://dlcdn.apache.org/maven/maven-3/3.9.16/binaries/apache-maven-3.9.16-bin.tar.gz
 tar -xvf apache-maven-*-bin.tar.gz
 rm apache-maven-*-bin.tar.gz
 mv apache-maven-* /opt/
 
-MVN=/opt/apache-maven-3.9.4/bin/mvn
+MVN=/opt/apache-maven-3.9.16/bin/mvn
 $MVN clean package -Dmaven.javadoc.skip=true -DskipTests=true -Dpmd.skip=true \
     -Dencoding=UTF-8 -Dmaven.antrun.skip=true -Dcheckstyle.skip=true \
     -Denforcer.fail=false org.apache.maven.plugins:maven-shade-plugin:3.2.4:shade
@@ -39,7 +39,7 @@ ALL_JARS="fuzzywuzzy.jar:fuzzywuzzy-build.jar:diffutils.jar"
 BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):$JAZZER_API_PATH
 RUNTIME_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "\$this_dir/%s:"):\$this_dir
 
-for fuzzer in $(find $SRC -maxdepth 1 -name 'Fuzz*.java'); do
+for fuzzer in $(find $SRC -maxdepth 1 -name '*Fuzzer.java'); do
   fuzzer_basename=$(basename -s .java $fuzzer)
   javac -cp $BUILD_CLASSPATH $fuzzer
   cp $SRC/$fuzzer_basename.class $OUT/

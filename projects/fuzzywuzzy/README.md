@@ -5,7 +5,7 @@ The algorithm uses Levenshtein distance to calculate similarity between strings.
 
 ## Build Docker
 
-    $ sudo docker build -t oss-sydr-fuzz-fuzzywuzzy .
+    $ sudo docker build --build-arg BASE_IMAGE=swat-playground-22 -t oss-sydr-fuzz-fuzzywuzzy .
 
 ## Run Hybrid Fuzzing
 

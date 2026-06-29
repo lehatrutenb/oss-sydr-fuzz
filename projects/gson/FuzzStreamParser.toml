@@ -17,3 +17,18 @@
 [jazzer]
 target_class = "FuzzStreamParser"
 args = "--cp=/out:/out/gson.jar -dict=/out/json.dict -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/corpus"
+
+[swat]
+java = "/jdk/build/linux-x86_64-server-release/images/jdk/bin/java"
+swat = "/fuzz/SWAT"
+
+[swat.config]
+logging.classes="false"
+logging.level="INFO"
+
+instrumentation.transformer="PARAMETER"
+instrumentation.parameter.symbolicPattern="FuzzStreamParser:fuzzerTestOneInput"
+instrumentation.includePackages="FuzzStreamParser:com/google/gson"
+
+solver.solver="CVC5"
+solver.timeoutMS="10000"

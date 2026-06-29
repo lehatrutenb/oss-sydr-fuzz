@@ -1,4 +1,5 @@
 // Copyright 2021 Google LLC
+// Modifications copyright (C) 2025 ISP RAS
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,14 +15,23 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-import com.code_intelligence.jazzer.api.FuzzedDataProvider;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import com.code_intelligence.jazzer.api.FuzzerSecurityIssueHigh;
 import com.code_intelligence.jazzer.api.FuzzerSecurityIssueMedium;
 import com.google.json.JsonSanitizer;
 
 public class DenylistFuzzer {
-  public static void fuzzerTestOneInput(FuzzedDataProvider data) {
-    String input = data.consumeRemainingAsString();
+  public static void main(String[] args) {
+      try {
+        fuzzerTestOneInput(Files.readString(Path.of(args[0])));
+      } catch (IOException e) {
+        return;
+      }
+  }
+  public static void fuzzerTestOneInput(String input) {
     String output;
     try {
       output = JsonSanitizer.sanitize(input, 10);

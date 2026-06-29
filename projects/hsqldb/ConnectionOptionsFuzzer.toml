@@ -17,3 +17,18 @@
 [jazzer]
 target_class = "ConnectionOptionsFuzzer"
 args = "--cp=/out/:/out/hsqldb.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 --disabled_hooks=com.code_intelligence.jazzer.sanitizers.SqlInjection"
+
+[swat]
+java = "/jdk/build/linux-x86_64-server-release/images/jdk/bin/java"
+swat = "/fuzz/SWAT"
+
+[swat.config]
+logging.classes="false"
+logging.level="INFO"
+
+instrumentation.transformer="PARAMETER"
+instrumentation.parameter.symbolicPattern="ConnectionOptionsFuzzer:fuzzerTestOneInput"
+instrumentation.includePackages="ConnectionOptionsFuzzer:org/hsqldb"
+
+solver.solver="CVC5"
+solver.timeoutMS="10000"

@@ -17,20 +17,28 @@
 import java.io.StringReader;
 import java.io.IOException;
 import java.lang.AssertionError;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import org.codehaus.commons.compiler.CompileException;
 import org.codehaus.janino.ExpressionEvaluator;
 import org.codehaus.janino.Scanner;
 import org.codehaus.janino.ScriptEvaluator;
 
 public class ExpressionEvaluatorFuzzer {
-  public static void fuzzerTestOneInput(byte[] data) {
-    String input = new String(data);
+  public static void main(String[] args) {
+      try {
+        fuzzerTestOneInput(Files.readString(Path.of(args[0])));
+      } catch (IOException e) {
+        return;
+      }
+  }
+  public static void fuzzerTestOneInput(String input) {
     try{
       ExpressionEvaluator.guessParameterNames(new Scanner(null, new StringReader(input)));
     }
     catch(IOException | CompileException | AssertionError e){
       return;
     }
-    
   }
 }
