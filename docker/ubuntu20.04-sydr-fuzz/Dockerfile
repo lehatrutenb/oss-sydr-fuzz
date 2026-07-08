@@ -10,7 +10,8 @@ RUN apt-get update && \
                        lcov pkg-config libglib2.0-dev gcc-10 g++-10 \
                        gcc-10-plugin-dev gcc-10-multilib python3.9 python3.9-dev \
                        python3-pip python3.9-venv libtool gnuplot binutils-dev \
-                       zip htop psutils openjdk-17-jdk
+                       zip htop psutils openjdk-17-jdk lsb-release \
+                       software-properties-common gnupg
 
 RUN dpkg --add-architecture i386 && \
     apt update && apt install -y zlib1g:i386 zlib1g-dev:i386
@@ -71,6 +72,11 @@ RUN wget -q https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-14.0.
         -GNinja  ../llvm/ && \
     CMAKE_BUILD_PARALLEL_LEVEL=$(nproc) cmake --build . && \
     cmake --install . && cd ../.. && rm -rf llvm-project*
+
+# Install LLVM-18
+RUN ln -sf /usr/bin/python3.8 /usr/bin/python3
+RUN wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && ./llvm.sh 18 all
+RUN ln -sf /usr/bin/python3.9 /usr/bin/python3
 
 RUN echo /usr/lib/x86_64-unknown-linux-gnu > /etc/ld.so.conf.d/libc++.conf && \
     ldconfig
