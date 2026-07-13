@@ -35,6 +35,6 @@ ENV CASR_SOURCE_DIRS /gson/gson/src/main/java/
 
 WORKDIR /gson
 RUN git checkout 0e591c207121fdef26a795096adc8c0076caae21
-RUN /gson/build.sh
+RUN bash /gson/build.sh
 
 ENV PATH=${PATH}:/fuzz/SWAT
