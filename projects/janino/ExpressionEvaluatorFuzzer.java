@@ -34,10 +34,12 @@ public class ExpressionEvaluatorFuzzer {
       }
   }
   public static void fuzzerTestOneInput(String input) {
-    try{
-      ExpressionEvaluator.guessParameterNames(new Scanner(null, new StringReader(input)));
+    if (input == null || input.isEmpty()) {
+      return;
     }
-    catch(IOException | CompileException | AssertionError e){
+    try {
+      ExpressionEvaluator.guessParameterNames(new Scanner(null, new StringReader(input)));
+    } catch(IOException | CompileException | AssertionError e) {
       return;
     }
   }

@@ -29,5 +29,3 @@ ENV CASR_SOURCE_DIRS /janino/janino/src/main/java/
 WORKDIR /janino
 RUN git checkout 4db1b8117bda36056f4eeab2d29e1f524b21b13c
 RUN bash /janino/build.sh
-
-ENV PATH=${PATH}:/fuzz/SWAT
