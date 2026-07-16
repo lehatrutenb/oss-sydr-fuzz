@@ -34,6 +34,9 @@ public class DiffUtilsFuzzer {
       }
   }
   public static void fuzzerTestOneInput(String input) {
+    if (input == null || input.isEmpty()) {
+      return;
+    }
     try {
       DiffUtils.diffInline(input.substring(0, input.length() / 2), input.substring(input.length() / 2));
     } catch (IllegalStateException e) {

@@ -29,6 +29,9 @@ public class FuzzySearchFuzzer {
       }
   }
   public static void fuzzerTestOneInput(String input) {
+    if (input == null || input.isEmpty()) {
+      return;
+    }
     FuzzySearch.weightedRatio(
         input.substring(0, input.length() / 2), input.substring(input.length() / 2));
   }

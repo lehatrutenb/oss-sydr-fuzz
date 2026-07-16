@@ -29,5 +29,3 @@ ENV CASR_SOURCE_DIRS /joda-time/src/main/java
 WORKDIR /joda-time
 RUN git checkout 15c3df573457a34e36d4b918e114d9c2d7e45396
 RUN /joda-time/build.sh
-
-ENV PATH=${PATH}:/fuzz/SWAT

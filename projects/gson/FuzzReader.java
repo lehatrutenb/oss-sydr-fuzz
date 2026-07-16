@@ -31,6 +31,9 @@ public class FuzzReader {
       }
   }
   public static void fuzzerTestOneInput(String input) {
+    if (input == null || input.isEmpty()) {
+      return;
+    }
     TypeAdapter<JsonElement> adapter = new Gson().getAdapter(JsonElement.class);
     boolean lenient = false;
     JsonReader reader = new JsonReader(new StringReader(input));

@@ -19,8 +19,9 @@ target_class = "ConnectionOptionsFuzzer"
 args = "--cp=/out/:/out/hsqldb.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 --disabled_hooks=com.code_intelligence.jazzer.sanitizers.SqlInjection"
 
 [swat]
-java = "/jdk/build/linux-x86_64-server-release/images/jdk/bin/java"
-swat = "/fuzz/SWAT"
+java = "/jdk/bin/java"
+swat = "/swat/jar/swat.jar"
+args = "-Xmx32g -Djava.library.path=/swat/libs/java-library-path"
 
 [swat.config]
 logging.classes="false"
@@ -30,5 +31,5 @@ instrumentation.transformer="PARAMETER"
 instrumentation.parameter.symbolicPattern="ConnectionOptionsFuzzer:fuzzerTestOneInput"
 instrumentation.includePackages="ConnectionOptionsFuzzer:org/hsqldb"
 
-solver.solver="CVC5"
+solver.solver="Z3"
 solver.timeoutMS="10000"

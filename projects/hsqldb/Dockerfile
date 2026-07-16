@@ -30,5 +30,3 @@ COPY *.java /
 WORKDIR /hsqldb
 
 RUN /build.sh
-
-ENV PATH=${PATH}:/fuzz/SWAT

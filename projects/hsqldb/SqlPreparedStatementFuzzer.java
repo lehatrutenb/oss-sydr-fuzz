@@ -35,6 +35,9 @@ public class SqlPreparedStatementFuzzer extends TestServer {
 	}
 
 	public static void fuzzerTestOneInput(String input) throws Exception {
+		if (input == null || input.isEmpty()) {
+			return;
+		}
 		try (TestServer fuzzer = new SqlPreparedStatementFuzzer(false)) {
 			fuzzer.testOneInput(input);
 		}

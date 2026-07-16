@@ -29,5 +29,3 @@ ENV CASR_SOURCE_DIRS /java-diff-utils/java-diff-utils/src/main/java/
 WORKDIR /java-diff-utils
 RUN git checkout 903982517a747d012639c85bdbe05721f88b86d9
 RUN /java-diff-utils/build.sh
-
-ENV PATH=${PATH}:/fuzz/SWAT

@@ -29,6 +29,9 @@ public class TimeFuzzer {
       }
   }
   public static void fuzzerTestOneInput(String input) {
+    if (input == null || input.isEmpty()) {
+      return;
+    }
     try {
       DateTimeZone.forID(input);
     } catch (IllegalArgumentException e) {}

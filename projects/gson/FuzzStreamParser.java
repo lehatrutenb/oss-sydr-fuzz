@@ -29,6 +29,9 @@ public class FuzzStreamParser {
       }
   }
   public static void fuzzerTestOneInput(String input) {
+    if (input == null || input.isEmpty()) {
+      return;
+    }
     try {
       JsonStreamParser parser = new JsonStreamParser(input);
       JsonElement element;

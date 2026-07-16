@@ -32,6 +32,9 @@ public class DenylistFuzzer {
       }
   }
   public static void fuzzerTestOneInput(String input) {
+    if (input == null || input.isEmpty()) {
+      return;
+    }
     String output;
     try {
       output = JsonSanitizer.sanitize(input, 10);
