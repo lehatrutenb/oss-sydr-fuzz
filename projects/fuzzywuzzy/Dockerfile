@@ -28,4 +28,5 @@ ENV CASR_SOURCE_DIRS /fuzzywuzzy/diffutils/src/:/fuzzywuzzy/src/
 
 WORKDIR /fuzzywuzzy
 RUN git checkout e8376dfdc1c0cb72f7924f3a347bfcd39855dbeb
+RUN mkdir -p /root/.m2 && echo '<settings xmlns="http://apache.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://apache.org https://apache.org"><mirrors><mirror><id>central-mirror-fix</id><name>Redirect broken Sonatype Grid to Central</name><url>https://repo.maven.apache.org/maven2/</url><mirrorOf>rso-public-grid</mirrorOf></mirror></mirrors></settings>' > /root/.m2/settings.xml
 RUN /fuzzywuzzy/build.sh

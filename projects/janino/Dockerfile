@@ -28,4 +28,5 @@ ENV CASR_SOURCE_DIRS /janino/janino/src/main/java/
 
 WORKDIR /janino
 RUN git checkout 4db1b8117bda36056f4eeab2d29e1f524b21b13c
+RUN mkdir -p /root/.m2 && echo '<settings xmlns="http://apache.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://apache.org https://apache.org"><mirrors><mirror><id>central-mirror-fix</id><name>Redirect broken Sonatype Grid to Central</name><url>https://repo.maven.apache.org/maven2/</url><mirrorOf>rso-public-grid</mirrorOf></mirror></mirrors></settings>' > /root/.m2/settings.xml
 RUN bash /janino/build.sh

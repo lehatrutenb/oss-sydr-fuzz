@@ -28,4 +28,5 @@ ENV CASR_SOURCE_DIRS /java-diff-utils/java-diff-utils/src/main/java/
 
 WORKDIR /java-diff-utils
 RUN git checkout 903982517a747d012639c85bdbe05721f88b86d9
+RUN mkdir -p /root/.m2 && echo '<settings xmlns="http://apache.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://apache.org https://apache.org"><mirrors><mirror><id>central-mirror-fix</id><name>Redirect broken Sonatype Grid to Central</name><url>https://repo.maven.apache.org/maven2/</url><mirrorOf>rso-public-grid</mirrorOf></mirror></mirrors></settings>' > /root/.m2/settings.xml
 RUN /java-diff-utils/build.sh
