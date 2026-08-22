@@ -38,7 +38,8 @@ public class DiffUtilsFuzzer {
       return;
     }
     try {
-      DiffUtils.diffInline(input.substring(0, input.length() / 2), input.substring(input.length() / 2));
+      var res = DiffUtils.diffInline(input.substring(0, input.length() / 2), input.substring(input.length() / 2));
+      assert !res.getDeltas().isEmpty();
     } catch (IllegalStateException e) {
       // Known exception
     }

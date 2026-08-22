@@ -1,4 +1,4 @@
-# Copyright 2023 ISP RAS
+# Copyright 2025 ISP RAS
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,21 +15,21 @@
 ################################################################################
 
 [jazzer]
-target_class = "IdempotenceFuzzer"
-args = "--cp=/out/:/out/gson-2.8.6.jar:/out/json-sanitizer.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/corpus -dict=/out/IdempotenceFuzzer.dict"
+target_class = "InstantFuzzer"
+args = "--cp=/out:/out/joda-time.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/corpus"
 
 [swat]
 java = "/jdk/bin/java"
 swat = "/swat/jar/swat.jar"
-args = "-Xmx32g -Djava.library.path=/swat/libs/java-library-path -cp=/out/:/out/gson-2.8.6.jar:/out/json-sanitizer.jar:/swat/libs/java-library-path/jazzer_standalone_deploy.jar"
+args = "-Xmx32g -Djava.library.path=/swat/libs/java-library-path"
 
 [swat.config]
 logging.classes="false"
 logging.level="INFO"
 
 instrumentation.transformer="PARAMETER"
-instrumentation.parameter.symbolicPattern="IdempotenceFuzzer:fuzzerTestOneInput"
-instrumentation.includePackages="IdempotenceFuzzer:com/google/json"
+instrumentation.parameter.symbolicPattern="InstantFuzzer:fuzzerTestOneInput"
+instrumentation.includePackages="InstantFuzzer:org/joda/time:org/joda"
 
 solver.solver="Z3"
 solver.timeoutMS="10000"

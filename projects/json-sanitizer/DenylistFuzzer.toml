@@ -21,7 +21,7 @@ args = "--cp=/out/:/out/gson-2.8.6.jar:/out/json-sanitizer.jar -jobs=1000 -worke
 [swat]
 java = "/jdk/bin/java"
 swat = "/swat/jar/swat.jar"
-args = "-Xmx32g -Djava.library.path=/swat/libs/java-library-path"
+args = "-Xmx32g -Djava.library.path=/swat/libs/java-library-path -cp=/out/:/out/gson-2.8.6.jar:/out/json-sanitizer.jar:/swat/libs/java-library-path/jazzer_standalone_deploy.jar"
 
 [swat.config]
 logging.classes="false"
