@@ -19,16 +19,14 @@ FROM $BASE_IMAGE
 
 RUN mkdir /src && mkdir /out
 
-RUN git clone https://github.com/JodaOrg/joda-time joda-time
+RUN git clone https://github.com/jwtk/jjwt.git jjwt
 
-COPY build.sh /joda-time
+COPY build.sh /jjwt
+COPY TokenParserFuzzer.java /src/
 
-COPY InstantFuzzer.java /src/
-COPY TimeFuzzer.java /src/
+ENV CASR_SOURCE_DIRS /jjwt/src/main/java 
 
-ENV CASR_SOURCE_DIRS /joda-time/src/main/java 
-
-WORKDIR /joda-time
-RUN git checkout 15c3df573457a34e36d4b918e114d9c2d7e45396
+WORKDIR /jjwt
+RUN git checkout a757addce04f6b6d8086beeee8dafcf670550a5b
 RUN mkdir -p /root/.m2 && echo '<settings xmlns="http://apache.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://apache.org https://apache.org"><mirrors><mirror><id>central-mirror-fix</id><name>Redirect broken Sonatype Grid to Central</name><url>https://repo.maven.apache.org/maven2/</url><mirrorOf>rso-public-grid</mirrorOf></mirror></mirrors></settings>' > /root/.m2/settings.xml
-RUN /joda-time/build.sh
+RUN /jjwt/build.sh

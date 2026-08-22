@@ -14,15 +14,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+import java.io.StringReader;
 import java.io.IOException;
+import java.lang.AssertionError;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.Instant;
-import java.time.format.DateTimeParseException;
 
-import org.joda.time.*;
+import io.jsonwebtoken.Jwt;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 
-public class InstantFuzzer {
+public class TokenParserFuzzer {
     public static void main(String[] args) {
         try {
             fuzzerTestOneInput(Files.readString(Path.of(args[0])));
@@ -32,12 +34,12 @@ public class InstantFuzzer {
     }
 
     public static void fuzzerTestOneInput(String input) {
-        if (input == null || input.isEmpty()) {
+        if (input == null || input.isEmpty() || input.isBlank()) {
             return;
         }
+        Jwt<?,?> jwt;
         try {
-            Instant.parse(input);
-        } catch (DateTimeParseException e) {
-        }
+            jwt = Jwts.parser().build().parse(input);
+        } catch (JwtException ex) {}
     }
 }
