@@ -24,7 +24,7 @@ RUN git clone https://github.com/jwtk/jjwt.git jjwt
 COPY build.sh /jjwt
 COPY TokenParserFuzzer.java /src/
 
-ENV CASR_SOURCE_DIRS /jjwt/src/main/java 
+ENV CASR_SOURCE_DIRS=/jjwt/api/src/main/java:/jjwt/impl/src/main/java
 
 WORKDIR /jjwt
 RUN git checkout a757addce04f6b6d8086beeee8dafcf670550a5b
