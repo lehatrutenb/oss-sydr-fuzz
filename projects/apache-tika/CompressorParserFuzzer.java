@@ -39,7 +39,7 @@ public class CompressorParserFuzzer {
       }
   }
 
-    public static void fuzzerTestOneInput(String data) throws Throwable  {
+    public static void fuzzerTestOneInput(String data) {
         if (data == null) {
             return;
         }

@@ -42,7 +42,7 @@ public class AutoDetectParserFuzzer {
   }
     private static final Parser AUTO_DETECT_PARSER = new AutoDetectParser();
 
-    public static void fuzzerTestOneInput(String data) throws Throwable  {
+    public static void fuzzerTestOneInput(String data) {
         if (data == null) {
             return;
         }

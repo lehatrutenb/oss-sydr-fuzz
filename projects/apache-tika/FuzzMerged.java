@@ -34,7 +34,7 @@ public class FuzzMerged {
   }
   private static final int TARGETS = 15;
 
-  public static void fuzzerTestOneInput(String data) throws Throwable {
+  public static void fuzzerTestOneInput(String data) {
     if (data == null || data.length() < 1) {
       return;
     }

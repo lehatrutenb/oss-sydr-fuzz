@@ -48,7 +48,7 @@ public class XMLReaderUtilsFuzzer {
       }
   }
 
-    public static void fuzzerTestOneInput(String data) throws Exception  {
+    public static void fuzzerTestOneInput(String data) {
         if (data == null) {
             return;
         }
@@ -57,10 +57,10 @@ public class XMLReaderUtilsFuzzer {
         try {
             parseOne(bytes);
         } catch (java.io.FileNotFoundException e) {
-            //this should be rethrown because it could signal an XMLParser looking for a DTD
-            throw e;
+            // DTD lookup failure — surface to Jazzer as unchecked
+            throw new RuntimeException(e);
         } catch (TikaException | IOException | SAXException e) {
-            e.printStackTrace();
+            //swallow
         }
     }
 

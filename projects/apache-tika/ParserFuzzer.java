@@ -14,13 +14,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-import java.nio.file.Path;
-import java.nio.file.Files;
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
 
+import org.apache.tika.exception.TikaException;
 import org.apache.tika.io.TikaInputStream;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.ParseContext;
@@ -33,18 +32,18 @@ import org.apache.tika.sax.ToTextContentHandler;
 
 class ParserFuzzer {
 
-    public static void parseOne(Parser parser, byte[] bytes, ParseContext parseContext) throws Throwable {
+    public static void parseOne(Parser parser, byte[] bytes, ParseContext parseContext) throws IOException, TikaException, SAXException {
         parseBytes(parser, bytes, parseContext);
         parseFile(parser, bytes, parseContext);
     }
 
 
-    public static void parseOne(Parser parser, byte[] bytes) throws Throwable {
+    public static void parseOne(Parser parser, byte[] bytes) throws IOException, TikaException, SAXException {
         parseBytes(parser, bytes, new ParseContext());
         parseFile(parser, bytes, new ParseContext());
     }
 
-    public static void parseRMetaFile(Parser parser, byte[] bytes) throws Throwable {
+    public static void parseRMetaFile(Parser parser, byte[] bytes) throws IOException, TikaException, SAXException {
         RecursiveParserWrapper wrapper = new RecursiveParserWrapper(parser);
         RecursiveParserWrapperHandler rpwh = new RecursiveParserWrapperHandler(
                 new BasicContentHandlerFactory(BasicContentHandlerFactory.HANDLER_TYPE.XML, -1));
@@ -54,7 +53,7 @@ class ParserFuzzer {
         }
     }
 
-    public static void parseBytes(Parser parser, byte[] bytes, ParseContext parseContext) throws Throwable {
+    public static void parseBytes(Parser parser, byte[] bytes, ParseContext parseContext) throws IOException, TikaException, SAXException {
         ContentHandler handler = new ToTextContentHandler();
         //make sure that other parsers cannot be invoked
         parseContext.set(Parser.class, parser);
@@ -64,7 +63,7 @@ class ParserFuzzer {
         }
     }
 
-    public static void parseFile(Parser parser, byte[] bytes, ParseContext parseContext) throws Throwable {
+    public static void parseFile(Parser parser, byte[] bytes, ParseContext parseContext) throws IOException, TikaException, SAXException {
         ContentHandler handler = new ToTextContentHandler();
         //make sure that other parsers cannot be invoked
         parseContext.set(Parser.class, parser);
