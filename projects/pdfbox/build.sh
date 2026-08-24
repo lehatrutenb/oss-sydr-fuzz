@@ -38,11 +38,22 @@ $MVN dependency:copy -Dartifact=org.apache.logging.log4j:log4j-api:2.24.3 -Doutp
 $MVN dependency:copy -Dartifact=org.apache.logging.log4j:log4j-core:2.24.3 -DoutputDirectory=$OUT/
 mv $OUT/log4j-api-2.24.3.jar $OUT/log4j-api.jar
 mv $OUT/log4j-core-2.24.3.jar $OUT/log4j-core.jar
-# JaCoCo chokes on Multi-Release JARs (duplicate classes under META-INF/versions).
-tmpdir=$(mktemp -d)
-(cd "$tmpdir" && jar xf $OUT/log4j-core.jar && rm -rf META-INF/versions && jar cf $OUT/log4j-core.jar .)
-rm -rf "$tmpdir"
 cp $SRC/log4j2.xml $OUT/
+
+# JaCoCo aborts the whole coverage report when two class files share a name
+# but differ, which is exactly what a Multi-Release jar holds:
+# META-INF/versions/N/<C>.class next to the base <C>.class. Drop the versioned
+# copies. `zip -d` deletes entries in place so the survivors keep their bytes --
+# repacking with `jar cf` regenerates the manifest and makes signed jars fail at
+# class load with "SecurityException: Invalid signature file digest".
+for jar in "$OUT"/*.jar; do
+  [ -f "$jar" ] || continue
+  if unzip -l "$jar" 'META-INF/versions/*' 2>/dev/null | grep '\.class$' \
+       | grep -qv 'module-info\.class$'; then
+    echo "dropping multi-release classes from ${jar##*/}"
+    zip -qd "$jar" 'META-INF/versions/*'
+  fi
+done
 
 JAZZER_API_PATH=/usr/local/lib/jazzer_standalone_deploy.jar
 ALL_JARS="pdfbox.jar fontbox.jar pdfbox-io.jar log4j-api.jar log4j-core.jar"

@@ -38,6 +38,21 @@ cp "target/jsoup-$CURRENT_VERSION.jar" $OUT/jsoup.jar
 $MVN dependency:copy -Dartifact=com.google.re2j:re2j:1.8 -DoutputDirectory=$OUT/
 mv $OUT/re2j-1.8.jar $OUT/re2j.jar
 
+# JaCoCo aborts the whole coverage report when two class files share a name
+# but differ, which is exactly what a Multi-Release jar holds:
+# META-INF/versions/N/<C>.class next to the base <C>.class. Drop the versioned
+# copies. `zip -d` deletes entries in place so the survivors keep their bytes --
+# repacking with `jar cf` regenerates the manifest and makes signed jars fail at
+# class load with "SecurityException: Invalid signature file digest".
+for jar in "$OUT"/*.jar; do
+  [ -f "$jar" ] || continue
+  if unzip -l "$jar" 'META-INF/versions/*' 2>/dev/null | grep '\.class$' \
+       | grep -qv 'module-info\.class$'; then
+    echo "dropping multi-release classes from ${jar##*/}"
+    zip -qd "$jar" 'META-INF/versions/*'
+  fi
+done
+
 JAZZER_API_PATH=/usr/local/lib/jazzer_standalone_deploy.jar
 if [ ! -f "$JAZZER_API_PATH" ]; then
   echo "ERROR: jazzer not found at $JAZZER_API_PATH" >&2

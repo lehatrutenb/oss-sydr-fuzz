@@ -37,6 +37,29 @@ cp "tika-app/target/tika-app-$CURRENT_VERSION.jar" $OUT/tika.jar
 cp tika-app/target/lib/*.jar $OUT/
 cp $SRC/tika-config.xml $SRC/log4j2.xml $OUT/
 
+# JaCoCo aborts the whole coverage report when two class files share a name
+# but differ, which is exactly what a Multi-Release jar holds:
+# META-INF/versions/N/<C>.class next to the base <C>.class. Drop the versioned
+# copies. `zip -d` deletes entries in place so the survivors keep their bytes --
+# repacking with `jar cf` regenerates the manifest and makes signed jars fail at
+# class load with "SecurityException: Invalid signature file digest".
+for jar in "$OUT"/*.jar; do
+  [ -f "$jar" ] || continue
+  if unzip -l "$jar" 'META-INF/versions/*' 2>/dev/null | grep '\.class$' \
+       | grep -qv 'module-info\.class$'; then
+    echo "dropping multi-release classes from ${jar##*/}"
+    zip -qd "$jar" 'META-INF/versions/*'
+  fi
+done
+
+# Same for commons-logging, which arrives transitively: it and jcl-over-slf4j
+# ship different copies of org.apache.commons.logging.*. Keep the bridge tika
+# asked for and drop the jar it replaces.
+if ls $OUT/jcl-over-slf4j-*.jar >/dev/null 2>&1; then
+  echo "dropping commons-logging, superseded by jcl-over-slf4j"
+  rm -f $OUT/commons-logging-*.jar
+fi
+
 JAZZER_API_PATH=/usr/local/lib/jazzer_standalone_deploy.jar
 BUILD_CLASSPATH=$(printf '%s:' $OUT/*.jar)$JAZZER_API_PATH
 
