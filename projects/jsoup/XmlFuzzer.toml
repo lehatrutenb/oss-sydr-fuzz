@@ -16,7 +16,7 @@
 
 [jazzer]
 target_class = "XmlFuzzer"
-args = "--cp=/out:/out/jsoup.jar:/out/re2j.jar -dict=/out/XmlFuzzer.dict -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/corpus-xml"
+args = "--cp=/out:/out/jsoup.jar:/out/re2j.jar -dict=/out/XmlFuzzer.dict -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-xml"
 
 [swat]
 java = "/jdk/bin/java"

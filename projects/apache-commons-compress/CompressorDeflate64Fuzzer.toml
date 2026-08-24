@@ -16,7 +16,7 @@
 
 [jazzer]
 target_class = "CompressorDeflate64Fuzzer"
-args = "--cp=/out:/out/commons-compress.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/corpus-CompressorDeflate64Fuzzer"
+args = "--cp=/out:/out/commons-compress.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-CompressorDeflate64Fuzzer"
 
 [swat]
 java = "/jdk/bin/java"

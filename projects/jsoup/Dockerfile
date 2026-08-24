@@ -38,9 +38,9 @@ RUN cat fuzzing/dictionaries/xml.dict \
 RUN cp fuzzing/dictionaries/css.dict /out/SelectorFuzzer.dict
 RUN rm -rf fuzzing
 
-RUN mkdir /out/corpus-xml
+RUN mkdir /corpus-xml
 RUN git clone --depth 1 https://github.com/dvyukov/go-fuzz-corpus && \
-    mv go-fuzz-corpus/xml/corpus/* /out/corpus-xml/ && rm -rf go-fuzz-corpus
+    mv go-fuzz-corpus/xml/corpus/* /corpus-xml/ && rm -rf go-fuzz-corpus
 
 RUN git clone https://github.com/jhy/jsoup jsoup
 

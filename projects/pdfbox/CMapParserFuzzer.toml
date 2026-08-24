@@ -16,7 +16,7 @@
 
 [jazzer]
 target_class = "CMapParserFuzzer"
-args = "--cp=/out:/out/pdfbox.jar:/out/fontbox.jar:/out/pdfbox-io.jar:/out/log4j-api.jar:/out/log4j-core.jar -dict=/out/pdf.dict -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/corpus-CMapParserFuzzer"
+args = "--cp=/out:/out/pdfbox.jar:/out/fontbox.jar:/out/pdfbox-io.jar:/out/log4j-api.jar:/out/log4j-core.jar -dict=/out/pdf.dict -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-CMapParserFuzzer"
 
 [swat]
 java = "/jdk/bin/java"

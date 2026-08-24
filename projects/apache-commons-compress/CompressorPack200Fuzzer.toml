@@ -16,7 +16,7 @@
 
 [jazzer]
 target_class = "CompressorPack200Fuzzer"
-args = "--cp=/out:/out/commons-compress.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/corpus-CompressorPack200Fuzzer"
+args = "--cp=/out:/out/commons-compress.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-CompressorPack200Fuzzer"
 
 [swat]
 java = "/jdk/bin/java"

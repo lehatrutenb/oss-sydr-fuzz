@@ -30,7 +30,7 @@ MAX_SEED_SIZE=2097152c  # 2 MiB; find -size units round up, so use bytes
 collect() {
   local target=$1
   shift
-  local dir=$OUT/corpus-$target
+  local dir=/corpus-$target
   mkdir -p $dir
   local n
   n=$(find $dir -type f | wc -l)
@@ -49,7 +49,7 @@ collect() {
 gofuzz() {
   local target=$1
   local sub=$2
-  local dir=$OUT/corpus-$target
+  local dir=/corpus-$target
   mkdir -p $dir
   local n
   n=$(find $dir -type f | wc -l)
@@ -88,16 +88,16 @@ collect CompressorZFuzzer '*.Z'
 
 # FuzzMerged reaches every target from one config, so give it the union of the
 # per-target corpora.
-mkdir -p $OUT/corpus-FuzzMerged
+mkdir -p /corpus-FuzzMerged
 n=0
-for dir in $OUT/corpus-*; do
+for dir in /corpus-*; do
   case "$dir" in
     */corpus-FuzzMerged) continue ;;
   esac
   for f in "$dir"/*; do
     [ -f "$f" ] || continue
     n=$((n + 1))
-    cp "$f" "$OUT/corpus-FuzzMerged/seed-$n"
+    cp "$f" "/corpus-FuzzMerged/seed-$n"
   done
 done
 echo "corpus-FuzzMerged: $n seeds"

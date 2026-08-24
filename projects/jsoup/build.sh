@@ -72,12 +72,12 @@ for required in HtmlFuzzer XmlFuzzer CleanFuzzer SelectorFuzzer CssHtmlFuzzer Fr
 done
 
 MAX_SEED_SIZE=65536
-mkdir -p $OUT/corpus-html
+mkdir -p /corpus-html
 seed=0
 for f in src/test/resources/htmltests/* src/test/resources/fuzztests/*; do
   [ -f "$f" ] || continue
   seed=$((seed + 1))
-  unit=$OUT/corpus-html/seed-$seed
+  unit=/corpus-html/seed-$seed
   if ! gzip -dc "$f" > "$unit" 2>/dev/null; then
     cp "$f" "$unit"
   fi
@@ -86,37 +86,37 @@ for f in src/test/resources/htmltests/* src/test/resources/fuzztests/*; do
   fi
 done
 
-mkdir -p $OUT/corpus-clean
-cp $OUT/corpus-html/* $OUT/corpus-clean/
+mkdir -p /corpus-clean
+cp /corpus-html/* /corpus-clean/
 
-mkdir -p $OUT/corpus-xml
+mkdir -p /corpus-xml
 cp src/test/resources/htmltests/*.xml src/test/resources/htmltests/*.xhtml \
-   src/test/resources/htmltests/*.svg $OUT/corpus-xml/ 2>/dev/null || true
+   src/test/resources/htmltests/*.svg /corpus-xml/ 2>/dev/null || true
 
-mkdir -p $OUT/corpus-selector
-echo 'div > p.note[href^=http]' > $OUT/corpus-selector/seed1
-echo 'a[href], img[src$=.png]' > $OUT/corpus-selector/seed2
-echo ':matches(^foo$):not(.bar):nth-child(2n+1)' > $OUT/corpus-selector/seed3
-echo 'html body div#id .cls * :root:has(> span)' > $OUT/corpus-selector/seed4
+mkdir -p /corpus-selector
+echo 'div > p.note[href^=http]' > /corpus-selector/seed1
+echo 'a[href], img[src$=.png]' > /corpus-selector/seed2
+echo ':matches(^foo$):not(.bar):nth-child(2n+1)' > /corpus-selector/seed3
+echo 'html body div#id .cls * :root:has(> span)' > /corpus-selector/seed4
 
-mkdir -p $OUT/corpus-csshtml
+mkdir -p /corpus-csshtml
 printf 'Adiv.note > p a[href]\n<html><body><div class=note><p><a href=x>l</a></p></div></body></html>' \
-  > $OUT/corpus-csshtml/seed1
-printf 'B*\n<div><span class=x>y</span></div>' > $OUT/corpus-csshtml/seed2
-cp $OUT/corpus-selector/seed1 $OUT/corpus-csshtml/seed3
-cp $OUT/corpus-html/seed-1 $OUT/corpus-csshtml/seed4 2>/dev/null || true
+  > /corpus-csshtml/seed1
+printf 'B*\n<div><span class=x>y</span></div>' > /corpus-csshtml/seed2
+cp /corpus-selector/seed1 /corpus-csshtml/seed3
+cp /corpus-html/seed-1 /corpus-csshtml/seed4 2>/dev/null || true
 
-mkdir -p $OUT/corpus-fragment
-printf 'Adiv\n<p>hello <b>world</b></p>' > $OUT/corpus-fragment/seed1
-printf 'Btd\n<a href=x>cell</a>' > $OUT/corpus-fragment/seed2
-cp $OUT/corpus-html/* $OUT/corpus-fragment/ 2>/dev/null || true
+mkdir -p /corpus-fragment
+printf 'Adiv\n<p>hello <b>world</b></p>' > /corpus-fragment/seed1
+printf 'Btd\n<a href=x>cell</a>' > /corpus-fragment/seed2
+cp /corpus-html/* /corpus-fragment/ 2>/dev/null || true
 
-mkdir -p $OUT/corpus-merged
+mkdir -p /corpus-merged
 n=0
-for f in $OUT/corpus-html/* $OUT/corpus-xml/* $OUT/corpus-selector/* \
-         $OUT/corpus-csshtml/* $OUT/corpus-fragment/*; do
+for f in /corpus-html/* /corpus-xml/* /corpus-selector/* \
+         /corpus-csshtml/* /corpus-fragment/*; do
   [ -f "$f" ] || continue
   n=$((n + 1))
-  cp "$f" "$OUT/corpus-merged/seed-$n"
+  cp "$f" "/corpus-merged/seed-$n"
 done
 echo "corpus-merged: $n seeds"

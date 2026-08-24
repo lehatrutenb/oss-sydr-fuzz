@@ -38,6 +38,10 @@ $MVN dependency:copy -Dartifact=org.apache.logging.log4j:log4j-api:2.24.3 -Doutp
 $MVN dependency:copy -Dartifact=org.apache.logging.log4j:log4j-core:2.24.3 -DoutputDirectory=$OUT/
 mv $OUT/log4j-api-2.24.3.jar $OUT/log4j-api.jar
 mv $OUT/log4j-core-2.24.3.jar $OUT/log4j-core.jar
+# JaCoCo chokes on Multi-Release JARs (duplicate classes under META-INF/versions).
+tmpdir=$(mktemp -d)
+(cd "$tmpdir" && jar xf $OUT/log4j-core.jar && rm -rf META-INF/versions && jar cf $OUT/log4j-core.jar .)
+rm -rf "$tmpdir"
 cp $SRC/log4j2.xml $OUT/
 
 JAZZER_API_PATH=/usr/local/lib/jazzer_standalone_deploy.jar
@@ -52,7 +56,7 @@ MAX_SEED_SIZE=2097152c
 collect() {
   local target=$1
   shift
-  local dir=$OUT/corpus-$target
+  local dir=/corpus-$target
   mkdir -p $dir
   local n=0
   for pattern in "$@"; do
@@ -72,22 +76,22 @@ collect CFFParserFuzzer '*.otf'
 collect CMapParserFuzzer '*.otf' '*.ttf'
 collect PFAParserFuzzer '*.pfa' '*.pfb' '*.ttf'
 
-mkdir -p $OUT/corpus-PDFWriteReadFuzzer
-printf 'AHello PDFBox write-read' > $OUT/corpus-PDFWriteReadFuzzer/seed-1
-printf 'BPage two with numbers 12345' > $OUT/corpus-PDFWriteReadFuzzer/seed-2
-printf 'C' > $OUT/corpus-PDFWriteReadFuzzer/seed-3
+mkdir -p /corpus-PDFWriteReadFuzzer
+printf 'AHello PDFBox write-read' > /corpus-PDFWriteReadFuzzer/seed-1
+printf 'BPage two with numbers 12345' > /corpus-PDFWriteReadFuzzer/seed-2
+printf 'C' > /corpus-PDFWriteReadFuzzer/seed-3
 echo "corpus-PDFWriteReadFuzzer: 3 seeds"
 
-mkdir -p $OUT/corpus-FuzzMerged
+mkdir -p /corpus-FuzzMerged
 n=0
-for dir in $OUT/corpus-*; do
+for dir in /corpus-*; do
   case "$dir" in
     */corpus-FuzzMerged) continue ;;
   esac
   for f in "$dir"/*; do
     [ -f "$f" ] || continue
     n=$((n + 1))
-    cp "$f" "$OUT/corpus-FuzzMerged/seed-$n"
+    cp "$f" "/corpus-FuzzMerged/seed-$n"
   done
 done
 echo "corpus-FuzzMerged: $n seeds"

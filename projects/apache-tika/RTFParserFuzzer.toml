@@ -16,7 +16,7 @@
 
 [jazzer]
 target_class = "RTFParserFuzzer"
-args = "--cp=/out:/out/tika.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/corpus-RTFParserFuzzer"
+args = "--cp=/out:/out/* -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-RTFParserFuzzer"
 
 [swat]
 java = "/jdk/bin/java"

@@ -16,7 +16,7 @@
 
 [jazzer]
 target_class = "SelectorFuzzer"
-args = "--cp=/out:/out/jsoup.jar:/out/re2j.jar -dict=/out/SelectorFuzzer.dict -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/corpus-selector"
+args = "--cp=/out:/out/jsoup.jar:/out/re2j.jar -dict=/out/SelectorFuzzer.dict -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-selector"
 
 [swat]
 java = "/jdk/bin/java"

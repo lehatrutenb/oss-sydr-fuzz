@@ -16,7 +16,7 @@
 
 [jazzer]
 target_class = "HtmlFuzzer"
-args = "--cp=/out:/out/jsoup.jar:/out/re2j.jar -dict=/out/HtmlFuzzer.dict -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/corpus-html"
+args = "--cp=/out:/out/jsoup.jar:/out/re2j.jar -dict=/out/HtmlFuzzer.dict -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-html"
 
 [swat]
 java = "/jdk/bin/java"

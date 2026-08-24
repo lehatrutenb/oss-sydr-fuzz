@@ -38,29 +38,29 @@ printf '\x00\x01\x02\x03\xff\xfe\xfd' > "$generic/seed-binary"
 printf '\xef\xbb\xbfwith bom\n' > "$generic/seed-bom"
 
 for target in $TARGETS; do
-  mkdir -p $OUT/corpus-$target
-  cp $generic/* $OUT/corpus-$target/
-  echo "corpus-$target: $(find $OUT/corpus-$target -type f | wc -l) seeds"
+  mkdir -p /corpus-$target
+  cp $generic/* /corpus-$target/
+  echo "corpus-$target: $(find /corpus-$target -type f | wc -l) seeds"
 done
 rm -rf $generic
 
-n=$(find $OUT/corpus-InputXmlFuzzer -type f | wc -l)
+n=$(find /corpus-InputXmlFuzzer -type f | wc -l)
 while IFS= read -r f; do
   n=$((n + 1))
-  cp "$f" "$OUT/corpus-InputXmlFuzzer/xml-$n"
+  cp "$f" "/corpus-InputXmlFuzzer/xml-$n"
 done < <(find $GOFUZZ/xml/corpus -type f -size -$MAX_SEED_SIZE)
 echo "corpus-InputXmlFuzzer: $n seeds"
 
-mkdir -p $OUT/corpus-FuzzMerged
+mkdir -p /corpus-FuzzMerged
 n=0
-for dir in $OUT/corpus-*; do
+for dir in /corpus-*; do
   case "$dir" in
     */corpus-FuzzMerged) continue ;;
   esac
   for f in "$dir"/*; do
     [ -f "$f" ] || continue
     n=$((n + 1))
-    cp "$f" "$OUT/corpus-FuzzMerged/seed-$n"
+    cp "$f" "/corpus-FuzzMerged/seed-$n"
   done
 done
 echo "corpus-FuzzMerged: $n seeds"

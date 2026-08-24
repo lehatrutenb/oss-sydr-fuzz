@@ -31,13 +31,17 @@ $MVN --batch-mode install $MAVEN_ARGS
 CURRENT_VERSION=$($MVN org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate \
  -Dexpression=project.version -q -DforceStdout)
 
-# tika-app is a fat jar with the parsers used by the harnesses.
+# tika-app's main artifact is thin (Class-Path: lib/). Parsers and deps are
+# copied to target/lib by maven-dependency-plugin during package.
 cp "tika-app/target/tika-app-$CURRENT_VERSION.jar" $OUT/tika.jar
+cp tika-app/target/lib/*.jar $OUT/
 cp $SRC/tika-config.xml $SRC/log4j2.xml $OUT/
 
 JAZZER_API_PATH=/usr/local/lib/jazzer_standalone_deploy.jar
-ALL_JARS="tika.jar"
-BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):$JAZZER_API_PATH
+BUILD_CLASSPATH=$(printf '%s:' $OUT/*.jar)$JAZZER_API_PATH
 
 javac -encoding UTF-8 -cp $BUILD_CLASSPATH $(find $SRC -maxdepth 1 -name '*.java')
 cp $SRC/*.class $OUT/
+
+echo "==> class files in $OUT:"
+ls -la "$OUT"/*.class

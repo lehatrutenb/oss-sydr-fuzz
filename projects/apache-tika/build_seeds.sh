@@ -30,7 +30,7 @@ MAX_SEED_SIZE=2097152c  # 2 MiB; find -size units round up, so use bytes
 collect() {
   local target=$1
   shift
-  local dir=$OUT/corpus-$target
+  local dir=/corpus-$target
   mkdir -p $dir
   local n=0
   local pattern
@@ -62,11 +62,11 @@ collect TextAndCSVParserFuzzer  '*.txt' '*.tsv' '*.csv'
 collect XMLReaderUtilsFuzzer    '*.xml'
 
 # AutoDetectParser dispatches on content, so it gets everything.
-mkdir -p $OUT/corpus-AutoDetectParserFuzzer
+mkdir -p /corpus-AutoDetectParserFuzzer
 n=0
 while IFS= read -r f; do
   n=$((n + 1))
-  cp "$f" $OUT/corpus-AutoDetectParserFuzzer/seed-$n
+  cp "$f" /corpus-AutoDetectParserFuzzer/seed-$n
 done < <(find $TIKA -path '*/test-documents/*' -type f -size -$MAX_SEED_SIZE)
 echo "corpus-AutoDetectParserFuzzer: $n seeds"
 
@@ -74,12 +74,12 @@ echo "corpus-AutoDetectParserFuzzer: $n seeds"
 # textual formats only. Handing it the binary corpora would add well over a
 # hundred megabytes of seeds that cannot survive the round trip through a
 # String, and the mutator framework generates text for this parameter anyway.
-mkdir -p $OUT/corpus-FuzzMerged
+mkdir -p /corpus-FuzzMerged
 n=0
-for f in $OUT/corpus-HtmlParserFuzzer/* $OUT/corpus-XMLReaderUtilsFuzzer/* \
-         $OUT/corpus-TextAndCSVParserFuzzer/* $OUT/corpus-RFC822ParserFuzzer/*; do
+for f in /corpus-HtmlParserFuzzer/* /corpus-XMLReaderUtilsFuzzer/* \
+         /corpus-TextAndCSVParserFuzzer/* /corpus-RFC822ParserFuzzer/*; do
   [ -f "$f" ] || continue
   n=$((n + 1))
-  cp "$f" "$OUT/corpus-FuzzMerged/seed-$n"
+  cp "$f" "/corpus-FuzzMerged/seed-$n"
 done
 echo "corpus-FuzzMerged: $n seeds"
