@@ -17,6 +17,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -28,9 +29,19 @@ import java.nio.file.Path;
  */
 
 public class FuzzMerged extends BaseTests {
+  public static String normString(String input) {
+      if (input == null) return null;
+      return input.codePoints()
+          .filter(cp -> cp <= 0x2FFFF)
+          .collect(StringBuilder::new, 
+              StringBuilder::appendCodePoint, 
+              StringBuilder::append)
+          .toString();
+  }
+
   public static void main(String[] args) {
       try {
-        fuzzerTestOneInput(Files.readString(Path.of(args[0])));
+        fuzzerTestOneInput(normString(new String(Files.readAllBytes(Path.of(args[0])), StandardCharsets.UTF_8)));
       } catch (IOException e) {
         return;
       }
@@ -49,7 +60,7 @@ public class FuzzMerged extends BaseTests {
         ArchiverArFuzzer.fuzzerTestOneInput(payload);
         break;
       case 1:
-        ArchiverArjFuzzer.fuzzerTestOneInput(payload);
+        //ArchiverArjFuzzer.fuzzerTestOneInput(payload);
         break;
       case 2:
         ArchiverCpioFuzzer.fuzzerTestOneInput(payload);

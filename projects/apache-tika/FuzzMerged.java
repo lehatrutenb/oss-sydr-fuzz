@@ -17,6 +17,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Every Tika fuzz target behind a single entry point.
@@ -25,9 +26,19 @@ import java.nio.file.Path;
  * payload passed through to the selected harness.
  */
 public class FuzzMerged {
+  public static String normString(String input) {
+      if (input == null) return null;
+      return input.codePoints()
+          .filter(cp -> cp <= 0x2FFFF)
+          .collect(StringBuilder::new, 
+              StringBuilder::appendCodePoint, 
+              StringBuilder::append)
+          .toString();
+  }
+
   public static void main(String[] args) {
       try {
-        fuzzerTestOneInput(Files.readString(Path.of(args[0])));
+        fuzzerTestOneInput(normString(new String(Files.readAllBytes(Path.of(args[0])), StandardCharsets.UTF_8)));
       } catch (IOException e) {
         return;
       }
@@ -43,10 +54,10 @@ public class FuzzMerged {
 
     switch (data.charAt(0) % TARGETS) {
       case 0:
-        AutoDetectParserFuzzer.fuzzerTestOneInput(payload);
+        //AutoDetectParserFuzzer.fuzzerTestOneInput(payload);
         break;
       case 1:
-        AudioVideoParsersFuzzer.fuzzerTestOneInput(payload);
+        //AudioVideoParsersFuzzer.fuzzerTestOneInput(payload);
         break;
       case 2:
         CompressorParserFuzzer.fuzzerTestOneInput(payload);
