@@ -25,9 +25,12 @@ rm apache-maven-*-bin.tar.gz
 mv apache-maven-* /opt/
 
 MVN=$(ls -d /opt/apache-maven-*/bin/mvn)
+# Java 17 parent profile pins spdx-maven-plugin 0.5.5, which ignores -Dspdx.skip
+# and hangs on SBOM generation. Override to a version that honors the skip flag.
 MAVEN_ARGS="-Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Drat.skip=true \
   -Danimal.sniffer.skip=true -Djapicmp.skip=true -Dcheckstyle.skip -Dspotbugs.skip \
-  -Dpmd.skip=true -Dcpd.skip=true"
+  -Dpmd.skip=true -Dcpd.skip=true -Dossindex.skip=true \
+  -Dcommons.spdx.version=1.0.4 -Dspdx.skip=true"
 $MVN --batch-mode package org.apache.maven.plugins:maven-shade-plugin:3.5.1:shade ${MAVEN_ARGS}
 CURRENT_VERSION=$($MVN org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate \
  -Dexpression=project.version -q -DforceStdout)
