@@ -16,7 +16,7 @@
 
 [jazzer]
 target_class = "JackcessParserFuzzer"
-args = "--cp=/out:/out/* -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-JackcessParserFuzzer"
+args = "--cp=/out:/out/tika-classpath.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-JackcessParserFuzzer"
 
 [swat]
 java = "/jdk/bin/java"

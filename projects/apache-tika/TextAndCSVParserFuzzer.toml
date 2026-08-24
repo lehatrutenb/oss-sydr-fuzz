@@ -16,7 +16,7 @@
 
 [jazzer]
 target_class = "TextAndCSVParserFuzzer"
-args = "--cp=/out:/out/* -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-TextAndCSVParserFuzzer"
+args = "--cp=/out:/out/tika-classpath.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-TextAndCSVParserFuzzer"
 
 [swat]
 java = "/jdk/bin/java"

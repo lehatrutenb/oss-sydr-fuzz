@@ -60,6 +60,17 @@ if ls $OUT/jcl-over-slf4j-*.jar >/dev/null 2>&1; then
   rm -f $OUT/commons-logging-*.jar
 fi
 
+# The tomls cannot say --cp=/out:/out/* : the JVM expands that wildcard, but
+# coverage hands every --cp entry to jacococli as a path and chokes on the
+# literal one ("FileNotFoundException: /out/*"). Point them at a manifest-only
+# jar instead -- the JVM follows its Class-Path to the ~90 parser jars, and
+# jacoco still reaches them by walking /out. Manifest lines cap at 72 bytes,
+# hence the fold into continuation lines.
+( cd $OUT && rm -f tika-classpath.jar \
+  && printf 'Class-Path: %s\n' "$(ls *.jar | sort | tr '\n' ' ')" \
+     | fold -w 71 | sed '2,$s/^/ /' > classpath.mf \
+  && jar cfm tika-classpath.jar classpath.mf && rm classpath.mf )
+
 JAZZER_API_PATH=/usr/local/lib/jazzer_standalone_deploy.jar
 BUILD_CLASSPATH=$(printf '%s:' $OUT/*.jar)$JAZZER_API_PATH
 

@@ -16,7 +16,7 @@
 
 [jazzer]
 target_class = "OOXMLParserFuzzer"
-args = "--cp=/out:/out/* -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-OOXMLParserFuzzer"
+args = "--cp=/out:/out/tika-classpath.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-OOXMLParserFuzzer"
 
 [swat]
 java = "/jdk/bin/java"

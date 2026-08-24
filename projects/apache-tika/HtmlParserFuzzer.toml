@@ -16,7 +16,7 @@
 
 [jazzer]
 target_class = "HtmlParserFuzzer"
-args = "--cp=/out:/out/* -dict=/out/html.dict -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-HtmlParserFuzzer"
+args = "--cp=/out:/out/tika-classpath.jar -dict=/out/html.dict -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-HtmlParserFuzzer"
 
 [swat]
 java = "/jdk/bin/java"
