@@ -16,7 +16,7 @@
 
 [jazzer]
 target_class = "FuzzMerged"
-args = "--cp=/out:/out/jsoup.jar:/out/re2j.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-merged"
+args = "--cp=/out:/out/jsoup.jar:/out/re2j.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-FuzzMerged"
 
 [swat]
 java = "/jdk/bin/java"

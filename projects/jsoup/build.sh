@@ -126,12 +126,12 @@ printf 'Adiv\n<p>hello <b>world</b></p>' > /corpus-fragment/seed1
 printf 'Btd\n<a href=x>cell</a>' > /corpus-fragment/seed2
 cp /corpus-html/* /corpus-fragment/ 2>/dev/null || true
 
-mkdir -p /corpus-merged
+mkdir -p /corpus-FuzzMerged
 n=0
 for f in /corpus-html/* /corpus-xml/* /corpus-selector/* \
          /corpus-csshtml/* /corpus-fragment/*; do
   [ -f "$f" ] || continue
   n=$((n + 1))
-  cp "$f" "/corpus-merged/seed-$n"
+  cp "$f" "/corpus-FuzzMerged/seed-$n"
 done
-echo "corpus-merged: $n seeds"
+echo "corpus-FuzzMerged: $n seeds"
