@@ -19,7 +19,7 @@ FROM $BASE_IMAGE
 
 RUN mkdir /src && mkdir /out
 
-RUN git clone https://github.com/JodaOrg/joda-time joda-time
+RUN true && until git clone https://github.com/JodaOrg/joda-time joda-time; do sleep 30; done
 
 COPY build.sh /joda-time
 

@@ -19,7 +19,7 @@ FROM $BASE_IMAGE
 
 RUN mkdir /src && mkdir /out
 
-RUN git clone https://github.com/janino-compiler/janino.git janino
+RUN true && until git clone https://github.com/janino-compiler/janino.git janino; do sleep 30; done
 
 COPY build.sh /janino
 COPY ExpressionEvaluatorFuzzer.java /src/

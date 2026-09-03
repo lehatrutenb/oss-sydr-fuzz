@@ -19,15 +19,15 @@ FROM $BASE_IMAGE
 
 RUN mkdir /src && mkdir /out
 
-RUN git clone --depth 1 https://github.com/google/fuzzing
+RUN true && until git clone --depth 1 https://github.com/google/fuzzing; do sleep 30; done
 RUN cp fuzzing/dictionaries/zip.dict /out/CompressZipFuzzer.dict
 RUN cp fuzzing/dictionaries/zip.dict /out/ArchiverZipStreamFuzzer.dict
 RUN cp fuzzing/dictionaries/bz2.dict /out/CompressorBZip2Fuzzer.dict
 RUN rm -rf fuzzing
 
-RUN git clone --depth 1 https://github.com/dvyukov/go-fuzz-corpus /src/go-fuzz-corpus
+RUN true && until git clone --depth 1 https://github.com/dvyukov/go-fuzz-corpus /src/go-fuzz-corpus; do sleep 30; done
 
-RUN git clone https://github.com/apache/commons-compress commons-compress
+RUN true && until git clone https://github.com/apache/commons-compress commons-compress; do sleep 30; done
 
 COPY build.sh build_seeds.sh /commons-compress
 COPY *.java /src/

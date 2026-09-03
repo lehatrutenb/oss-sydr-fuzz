@@ -19,7 +19,7 @@ FROM $BASE_IMAGE
 
 RUN mkdir /src && mkdir /out
 
-RUN git clone --depth 1 https://github.com/google/fuzzing
+RUN true && until git clone --depth 1 https://github.com/google/fuzzing; do sleep 30; done
 RUN cat fuzzing/dictionaries/html.dict \
         fuzzing/dictionaries/svg.dict \
         fuzzing/dictionaries/mathml.dict \
@@ -39,10 +39,10 @@ RUN cp fuzzing/dictionaries/css.dict /out/SelectorFuzzer.dict
 RUN rm -rf fuzzing
 
 RUN mkdir /out/corpus-xml
-RUN git clone --depth 1 https://github.com/dvyukov/go-fuzz-corpus && \
+RUN true && until git clone --depth 1 https://github.com/dvyukov/go-fuzz-corpus; do sleep 30; done && \
     mv go-fuzz-corpus/xml/corpus/* /out/corpus-xml/ && rm -rf go-fuzz-corpus
 
-RUN git clone https://github.com/jhy/jsoup jsoup
+RUN true && until git clone https://github.com/jhy/jsoup jsoup; do sleep 30; done
 
 COPY build.sh /jsoup/build.sh
 COPY HtmlFuzzer.java XmlFuzzer.java CleanFuzzer.java SelectorFuzzer.java \

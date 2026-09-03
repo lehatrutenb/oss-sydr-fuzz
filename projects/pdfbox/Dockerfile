@@ -19,11 +19,11 @@ FROM $BASE_IMAGE
 
 RUN mkdir /src && mkdir /out
 
-RUN git clone --depth 1 https://github.com/google/fuzzing
+RUN true && until git clone --depth 1 https://github.com/google/fuzzing; do sleep 30; done
 RUN cp fuzzing/dictionaries/pdf.dict /out/pdf.dict
 RUN rm -rf fuzzing
 
-RUN git clone https://github.com/apache/pdfbox pdfbox
+RUN true && until git clone https://github.com/apache/pdfbox pdfbox; do sleep 30; done
 
 COPY build.sh /pdfbox
 COPY *.java log4j2.xml /src/

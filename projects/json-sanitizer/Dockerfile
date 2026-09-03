@@ -18,7 +18,7 @@ ARG BASE_IMAGE="sydr/ubuntu20.04-sydr-fuzz"
 FROM $BASE_IMAGE
 
 RUN mkdir /out
-RUN git clone --depth 1 https://github.com/google/fuzzing
+RUN true && until git clone --depth 1 https://github.com/google/fuzzing; do sleep 30; done
 RUN cat fuzzing/dictionaries/json.dict \
         fuzzing/dictionaries/html.dict \
         fuzzing/dictionaries/xml.dict \
@@ -27,10 +27,10 @@ RUN cp fuzzing/dictionaries/json.dict /out/IdempotenceFuzzer.dict
 RUN cp fuzzing/dictionaries/json.dict /out/ValidJsonFuzzer.dict
 RUN rm -rf fuzzing
 
-RUN git clone --depth 1 https://github.com/dvyukov/go-fuzz-corpus && \
+RUN true && until git clone --depth 1 https://github.com/dvyukov/go-fuzz-corpus; do sleep 30; done && \
     mv go-fuzz-corpus/json/corpus /out/corpus && rm -rf go-fuzz-corpus
 
-RUN git clone https://github.com/OWASP/json-sanitizer /json-sanitizer
+RUN true && until git clone https://github.com/OWASP/json-sanitizer /json-sanitizer; do sleep 30; done
 
 COPY build.sh /json-sanitizer
 COPY DenylistFuzzer.java IdempotenceFuzzer.java ValidJsonFuzzer.java /

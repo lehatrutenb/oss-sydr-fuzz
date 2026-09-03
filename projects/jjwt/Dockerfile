@@ -19,7 +19,7 @@ FROM $BASE_IMAGE
 
 RUN mkdir /src && mkdir /out
 
-RUN git clone https://github.com/jwtk/jjwt.git jjwt
+RUN true && until git clone https://github.com/jwtk/jjwt.git jjwt; do sleep 30; done
 
 COPY build.sh /jjwt
 COPY TokenParserFuzzer.java /src/

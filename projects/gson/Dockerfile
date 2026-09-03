@@ -19,14 +19,14 @@ FROM $BASE_IMAGE
 
 RUN mkdir /src && mkdir /out
 
-RUN git clone --depth 1 https://github.com/google/fuzzing
+RUN true && until git clone --depth 1 https://github.com/google/fuzzing; do sleep 30; done
 RUN cp fuzzing/dictionaries/json.dict /out/json.dict
 RUN rm -rf fuzzing
 
-RUN git clone --depth 1 https://github.com/dvyukov/go-fuzz-corpus && \
+RUN true && until git clone --depth 1 https://github.com/dvyukov/go-fuzz-corpus; do sleep 30; done && \
     mv go-fuzz-corpus/json/corpus /out/corpus && rm -rf go-fuzz-corpus
 
-RUN git clone https://github.com/google/gson gson
+RUN true && until git clone https://github.com/google/gson gson; do sleep 30; done
 
 COPY build.sh /gson
 COPY FuzzParse.java FuzzReader.java FuzzStreamParser.java /src/

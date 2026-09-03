@@ -19,7 +19,7 @@ FROM $BASE_IMAGE
 
 RUN mkdir /src && mkdir /out
 
-RUN git clone https://github.com/java-diff-utils/java-diff-utils java-diff-utils
+RUN true && until git clone https://github.com/java-diff-utils/java-diff-utils java-diff-utils; do sleep 30; done
 
 COPY build.sh /java-diff-utils
 COPY DiffUtilsFuzzer.java /src

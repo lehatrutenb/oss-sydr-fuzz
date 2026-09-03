@@ -19,7 +19,7 @@ FROM $BASE_IMAGE
 
 RUN mkdir /src && mkdir /out
 
-RUN git clone https://github.com/xdrop/fuzzywuzzy fuzzywuzzy
+RUN true && until git clone https://github.com/xdrop/fuzzywuzzy fuzzywuzzy; do sleep 30; done
 
 COPY build.sh /fuzzywuzzy
 COPY *.java /src/

@@ -19,13 +19,13 @@ FROM $BASE_IMAGE
 
 RUN mkdir /src && mkdir /out
 
-RUN git clone --depth 1 https://github.com/google/fuzzing
+RUN true && until git clone --depth 1 https://github.com/google/fuzzing; do sleep 30; done
 RUN cp fuzzing/dictionaries/pdf.dict /out/pdf.dict
 RUN cp fuzzing/dictionaries/html.dict /out/html.dict
 RUN cp fuzzing/dictionaries/xml.dict /out/xml.dict
 RUN rm -rf fuzzing
 
-RUN git clone https://github.com/apache/tika tika
+RUN true && until git clone https://github.com/apache/tika tika; do sleep 30; done
 
 COPY build.sh build_seeds.sh /tika
 COPY *.java tika-config.xml log4j2.xml /src/

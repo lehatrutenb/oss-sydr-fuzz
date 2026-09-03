@@ -19,13 +19,13 @@ FROM $BASE_IMAGE
 
 RUN mkdir /src && mkdir /out
 
-RUN git clone --depth 1 https://github.com/google/fuzzing
+RUN true && until git clone --depth 1 https://github.com/google/fuzzing; do sleep 30; done
 RUN cp fuzzing/dictionaries/xml.dict /out/InputXmlFuzzer.dict
 RUN rm -rf fuzzing
 
-RUN git clone --depth 1 https://github.com/dvyukov/go-fuzz-corpus /src/go-fuzz-corpus
+RUN true && until git clone --depth 1 https://github.com/dvyukov/go-fuzz-corpus /src/go-fuzz-corpus; do sleep 30; done
 
-RUN git clone https://github.com/apache/commons-io commons-io
+RUN true && until git clone https://github.com/apache/commons-io commons-io; do sleep 30; done
 
 COPY build.sh build_seeds.sh /commons-io
 COPY *.java /src/
