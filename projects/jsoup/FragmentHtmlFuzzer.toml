@@ -16,7 +16,7 @@
 
 [jazzer]
 target_class = "FragmentHtmlFuzzer"
-args = "--cp=/out:/out/jsoup.jar:/out/re2j.jar -dict=/out/HtmlFuzzer.dict -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-fragment"
+args = "--cp=/out:/out/jsoup.jar:/out/re2j.jar -dict=/out/HtmlFuzzer.dict -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/corpus-fragment"
 
 [swat]
 java = "/jdk/bin/java"

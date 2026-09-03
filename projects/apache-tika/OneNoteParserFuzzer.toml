@@ -16,7 +16,7 @@
 
 [jazzer]
 target_class = "OneNoteParserFuzzer"
-args = "--cp=/out:/out/tika-classpath.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-OneNoteParserFuzzer"
+args = "--cp=/out:/out/tika-classpath.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/corpus-OneNoteParserFuzzer"
 
 [swat]
 java = "/jdk/bin/java"

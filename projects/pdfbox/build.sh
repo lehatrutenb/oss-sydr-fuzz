@@ -67,7 +67,7 @@ MAX_SEED_SIZE=2097152c
 collect() {
   local target=$1
   shift
-  local dir=/corpus-$target
+  local dir=$OUT/corpus-$target
   mkdir -p $dir
   local n=0
   for pattern in "$@"; do
@@ -87,22 +87,22 @@ collect CFFParserFuzzer '*.otf'
 collect CMapParserFuzzer '*.otf' '*.ttf'
 collect PFAParserFuzzer '*.pfa' '*.pfb' '*.ttf'
 
-mkdir -p /corpus-PDFWriteReadFuzzer
-printf 'AHello PDFBox write-read' > /corpus-PDFWriteReadFuzzer/seed-1
-printf 'BPage two with numbers 12345' > /corpus-PDFWriteReadFuzzer/seed-2
-printf 'C' > /corpus-PDFWriteReadFuzzer/seed-3
+mkdir -p $OUT/corpus-PDFWriteReadFuzzer
+printf 'AHello PDFBox write-read' > $OUT/corpus-PDFWriteReadFuzzer/seed-1
+printf 'BPage two with numbers 12345' > $OUT/corpus-PDFWriteReadFuzzer/seed-2
+printf 'C' > $OUT/corpus-PDFWriteReadFuzzer/seed-3
 echo "corpus-PDFWriteReadFuzzer: 3 seeds"
 
-mkdir -p /corpus-FuzzMerged
+mkdir -p $OUT/corpus-FuzzMerged
 n=0
-for dir in /corpus-*; do
+for dir in $OUT/corpus-*; do
   case "$dir" in
     */corpus-FuzzMerged) continue ;;
   esac
   for f in "$dir"/*; do
     [ -f "$f" ] || continue
     n=$((n + 1))
-    cp "$f" "/corpus-FuzzMerged/seed-$n"
+    cp "$f" "$OUT/corpus-FuzzMerged/seed-$n"
   done
 done
 echo "corpus-FuzzMerged: $n seeds"

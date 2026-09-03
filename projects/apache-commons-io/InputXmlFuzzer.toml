@@ -16,7 +16,7 @@
 
 [jazzer]
 target_class = "InputXmlFuzzer"
-args = "--cp=/out:/out/commons-io.jar -dict=/out/InputXmlFuzzer.dict -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-InputXmlFuzzer"
+args = "--cp=/out:/out/commons-io.jar -dict=/out/InputXmlFuzzer.dict -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/corpus-InputXmlFuzzer"
 
 [swat]
 java = "/jdk/bin/java"

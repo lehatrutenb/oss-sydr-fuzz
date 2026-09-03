@@ -16,7 +16,7 @@
 
 [jazzer]
 target_class = "FileUtilsFuzzer"
-args = "--cp=/out:/out/commons-io.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-FileUtilsFuzzer"
+args = "--cp=/out:/out/commons-io.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/corpus-FileUtilsFuzzer"
 
 [swat]
 java = "/jdk/bin/java"

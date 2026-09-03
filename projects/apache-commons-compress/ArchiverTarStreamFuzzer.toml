@@ -16,7 +16,7 @@
 
 [jazzer]
 target_class = "ArchiverTarStreamFuzzer"
-args = "--cp=/out:/out/commons-compress.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /corpus-ArchiverTarStreamFuzzer"
+args = "--cp=/out:/out/commons-compress.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/corpus-ArchiverTarStreamFuzzer"
 
 [swat]
 java = "/jdk/bin/java"
