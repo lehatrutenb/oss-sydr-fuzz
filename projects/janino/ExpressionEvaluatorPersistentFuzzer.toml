@@ -1,4 +1,4 @@
-# Copyright 2025 ISP RAS
+# Copyright 2026 ISP RAS
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,17 +21,18 @@ args = "--cp=/out:/out/janino.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/
 [swat]
 java = "/jdk/bin/java"
 swat = "/swat/jar/swat.jar"
-args = "-Xmx32g -Djava.library.path=/swat/libs/java-library-path"
+args = "-Xmx32g -cp /out:/out/janino.jar:$SWAT_TEMPLATES -Djava.library.path=/swat/libs/java-library-path"
 jobs = 2
+target_class = "ExpressionEvaluatorPersistentFuzzer"
 
 [swat.config]
 logging.classes="false"
 logging.level="INFO"
 
 instrumentation.transformer="PARAMETER"
-instrumentation.parameter.symbolicPattern="ExpressionEvaluatorFuzzer:fuzzerTestOneInput"
-instrumentation.includePackages="ExpressionEvaluatorFuzzer:org/codehaus/janino:org/codehaus:org/codehaus/commons"
+instrumentation.parameter.symbolicPattern="ExpressionEvaluatorPersistentFuzzer:fuzzerTestOneInput"
+instrumentation.includePackages="ExpressionEvaluatorPersistentFuzzer:org/codehaus/janino:org/codehaus:org/codehaus/commons"
 
 solver.solver="(Z3,0.3):(CVC5,0.7)"
 solver.timeoutMS="(10000,0.4):(30000,0.4):(60000,0.2)"
-solver.solveHidden="(false,0.5):(true,0.5)"
+solver.solveHidden="(false,0.7):(true,0.3)"

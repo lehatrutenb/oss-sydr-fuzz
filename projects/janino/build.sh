@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 ################################################################################
+
+set -euo pipefail
 SRC=/src
 OUT=/out
 
@@ -32,9 +34,8 @@ CURRENT_VERSION=$($MVN org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate
 cd /janino
 cp "janino/target/janino-$CURRENT_VERSION.jar" $OUT/janino.jar
 
-JAZZER_API_PATH=/usr/local/lib/jazzer_standalone_deploy.jar
 ALL_JARS="janino.jar"
-BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):$JAZZER_API_PATH
+BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):$JAZZER_API_PATH:$SWAT_TEMPLATES
 RUNTIME_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "\$this_dir/%s:"):\$this_dir
 
 mkdir $OUT/corpus
