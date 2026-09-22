@@ -22,7 +22,7 @@ RUN mkdir /src && mkdir /out
 RUN true && until git clone https://github.com/jwtk/jjwt.git jjwt; do sleep 30; done
 
 COPY build.sh /jjwt
-COPY TokenParserFuzzer.java /src/
+COPY TokenParserFuzzer.java TokenParserPersistentFuzzer.java /src/
 
 ENV CASR_SOURCE_DIRS=/jjwt/api/src/main/java:/jjwt/impl/src/main/java
 

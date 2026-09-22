@@ -44,14 +44,13 @@ $MVN -pl extensions/gson dependency:copy-dependencies \
 
 cp $OUT/gson-2.11.0.jar $OUT/gson.jar
 
-JAZZER_API_PATH=/usr/local/lib/jazzer_standalone_deploy.jar
 ALL_JARS="jjwt-api.jar jjwt-impl.jar jjwt-gson.jar gson.jar"
-BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):$JAZZER_API_PATH
+BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):$JAZZER_API_PATH:$SWAT_TEMPLATES
 RUNTIME_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "\$this_dir/%s:"):\$this_dir
 
 for fuzzer in $(find $SRC -name '*Fuzzer.java'); do
   fuzzer_basename=$(basename -s .java $fuzzer)
-  javac -cp $BUILD_CLASSPATH $fuzzer
+  javac -cp "$BUILD_CLASSPATH:$SRC" $fuzzer
   cp $SRC/$fuzzer_basename.class $OUT/
 done
 

@@ -42,7 +42,7 @@ mkdir $OUT/corpus
 
 for fuzzer in $(find $SRC -name '*Fuzzer.java'); do
   fuzzer_basename=$(basename -s .java $fuzzer)
-  javac -cp $BUILD_CLASSPATH $fuzzer
+  javac -cp "$BUILD_CLASSPATH:$SRC" $fuzzer
   cp $SRC/$fuzzer_basename.class $OUT/
   # Build corpus
   cp $fuzzer $OUT/corpus/

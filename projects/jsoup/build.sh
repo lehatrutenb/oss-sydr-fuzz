@@ -61,7 +61,7 @@ if [ ! -f "$JAZZER_API_PATH" ]; then
 fi
 
 ALL_JARS="jsoup.jar re2j.jar"
-BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):$JAZZER_API_PATH
+BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):$JAZZER_API_PATH:$SWAT_TEMPLATES
 
 # Same pattern as gson/janino: compile each source, copy .class into $OUT.
 # FuzzMerged last so the per-target classes already exist beside the sources.
@@ -76,10 +76,14 @@ echo "==> javac FuzzMerged"
 javac -encoding UTF-8 -cp "$BUILD_CLASSPATH:$SRC" "$SRC/FuzzMerged.java"
 cp "$SRC/FuzzMerged.class" "$OUT/"
 
+echo "==> javac FuzzMergedPersistent"
+javac -encoding UTF-8 -cp "$BUILD_CLASSPATH:$SRC" "$SRC/FuzzMergedPersistent.java"
+cp "$SRC/FuzzMergedPersistent.class" "$OUT/"
+
 echo "==> class files in $OUT:"
 ls -la "$OUT"/*.class
 
-for required in HtmlFuzzer XmlFuzzer CleanFuzzer SelectorFuzzer CssHtmlFuzzer FragmentHtmlFuzzer FuzzMerged; do
+for required in HtmlFuzzer XmlFuzzer CleanFuzzer SelectorFuzzer CssHtmlFuzzer FragmentHtmlFuzzer FuzzMerged FuzzMergedPersistent; do
   if [ ! -f "$OUT/$required.class" ]; then
     echo "ERROR: missing $OUT/$required.class" >&2
     exit 1

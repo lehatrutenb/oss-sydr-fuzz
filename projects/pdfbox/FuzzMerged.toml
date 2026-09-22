@@ -29,7 +29,7 @@ logging.level="INFO"
 
 instrumentation.transformer="PARAMETER"
 instrumentation.parameter.symbolicPattern="FuzzMerged:fuzzerTestOneInput"
-instrumentation.includePackages="FuzzMerged:org/apache/pdfbox:org/apache/fontbox"
+instrumentation.includePackages="FuzzMerged:PDFExtractTextFuzzer:PDFStreamParserFuzzer:TTFParserFuzzer:OTFParserFuzzer:CFFParserFuzzer:CMapParserFuzzer:PFAParserFuzzer:PDFWriteReadFuzzer:org/apache/pdfbox:org/apache/fontbox"
 
 solver.solver="Z3"
 solver.timeoutMS="10000"

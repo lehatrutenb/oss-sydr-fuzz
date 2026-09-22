@@ -1,5 +1,4 @@
-// Copyright 2022 Google LLC
-// Modifications copyright (C) 2026 ISP RAS
+// Copyright 2026 ISP RAS
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,18 +13,21 @@
 // limitations under the License.
 //
 ////////////////////////////////////////////////////////////////////////////////
+
 import java.io.IOException;
 
 import de.uzl.its.swat.templates.PersistentMode;
 
-public class ExpressionEvaluatorPersistentFuzzer {
+public class FuzzMergedPersistent {
   public static String[] args;
+
   public static void main(String[] args) {
-    ExpressionEvaluatorPersistentFuzzer.args = args;
+    FuzzMergedPersistent.args = args;
     fuzzerTestOneInput("");
   }
+
   public static void fuzzerTestOneInput(String _input) {
-    for (String path : ExpressionEvaluatorPersistentFuzzer.args) {
+    for (String path : FuzzMergedPersistent.args) {
       String input;
       try {
         input = PersistentMode.readString(path, true);
@@ -37,7 +39,7 @@ public class ExpressionEvaluatorPersistentFuzzer {
         continue;
       }
       try {
-        ExpressionEvaluatorFuzzer.fuzzerTestOneInput(input);
+        FuzzMerged.fuzzerTestOneInput(input);
       } finally {
         PersistentMode.dumpAndCleanSymbolicState();
       }

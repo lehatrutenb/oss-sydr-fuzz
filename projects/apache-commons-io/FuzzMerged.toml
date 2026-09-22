@@ -29,7 +29,7 @@ logging.level="INFO"
 
 instrumentation.transformer="PARAMETER"
 instrumentation.parameter.symbolicPattern="FuzzMerged:fuzzerTestOneInput"
-instrumentation.includePackages="FuzzMerged:org/apache/commons/io"
+instrumentation.includePackages="FuzzMerged:StringInputs:InputStreamFuzzer:OutputStreamFuzzer:ReaderFuzzer:WriterFuzzer:InputXmlFuzzer:FileUtilsFuzzer:PathUtilsFuzzer:FileFilterFuzzer:FileComparatorFuzzer:GeneralUtilsFuzzer:org/apache/commons/io"
 
 solver.solver="Z3"
 solver.timeoutMS="10000"

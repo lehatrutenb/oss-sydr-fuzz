@@ -51,9 +51,8 @@ for jar in "$OUT"/*.jar; do
   fi
 done
 
-JAZZER_API_PATH=/usr/local/lib/jazzer_standalone_deploy.jar
 ALL_JARS="commons-compress.jar"
-BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):$JAZZER_API_PATH
+BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):$JAZZER_API_PATH:$SWAT_TEMPLATES
 
 javac -encoding UTF-8 -cp $BUILD_CLASSPATH $(find $SRC -maxdepth 1 -name '*.java')
 cp $SRC/*.class $OUT/

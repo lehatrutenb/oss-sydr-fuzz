@@ -29,7 +29,8 @@ RUN true && until git clone --depth 1 https://github.com/dvyukov/go-fuzz-corpus;
 RUN true && until git clone https://github.com/google/gson gson; do sleep 30; done
 
 COPY build.sh /gson
-COPY FuzzParse.java FuzzReader.java FuzzStreamParser.java /src/
+COPY FuzzParse.java FuzzReader.java FuzzStreamParser.java \
+     FuzzReaderPersistent.java /src/
 
 ENV CASR_SOURCE_DIRS /gson/gson/src/main/java/
 

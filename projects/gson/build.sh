@@ -31,13 +31,12 @@ $MVN --batch-mode --update-snapshots package ${MAVEN_ARGS}
 cd ..
 find ./gson -name "gson-*.jar" -exec mv {} $OUT/gson.jar \;
 
-JAZZER_API_PATH=/usr/local/lib/jazzer_standalone_deploy.jar
 ALL_JARS="gson.jar"
-BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):$JAZZER_API_PATH
+BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):$JAZZER_API_PATH:$SWAT_TEMPLATES
 RUNTIME_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "\$this_dir/%s:"):.:\$this_dir
 
 for fuzzer in $(find $SRC -maxdepth 1 -name 'Fuzz*.java'); do
   fuzzer_basename=$(basename -s .java $fuzzer)
-  javac -cp $BUILD_CLASSPATH $fuzzer
+  javac -cp "$BUILD_CLASSPATH:$SRC" $fuzzer
   cp $SRC/$fuzzer_basename.class $OUT/
 done

@@ -22,6 +22,7 @@ args = "--cp=/out:/out/commons-compress.jar -dict=/out/ArchiverZipStreamFuzzer.d
 java = "/jdk/bin/java"
 swat = "/swat/jar/swat.jar"
 args = "-Xmx32g -Djava.library.path=/swat/libs/java-library-path"
+jobs = 2
 
 [swat.config]
 logging.classes="false"
@@ -31,5 +32,6 @@ instrumentation.transformer="PARAMETER"
 instrumentation.parameter.symbolicPattern="ArchiverZipStreamFuzzer:fuzzerTestOneInput"
 instrumentation.includePackages="ArchiverZipStreamFuzzer:org/apache/commons/compress"
 
-solver.solver="Z3"
-solver.timeoutMS="10000"
+solver.solver="(Z3,0.3):(CVC5,0.7)"
+solver.timeoutMS="(10000,0.4):(30000,0.4):(60000,0.2)"
+solver.solveHidden="(false,0.5):(true,0.5)"
