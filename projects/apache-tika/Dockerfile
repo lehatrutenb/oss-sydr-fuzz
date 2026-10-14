@@ -28,7 +28,7 @@ RUN rm -rf fuzzing
 RUN true && until git clone https://github.com/apache/tika tika; do sleep 30; done
 
 COPY build.sh build_seeds.sh /tika
-COPY *.java tika-config.xml log4j2.xml /src/
+COPY *.java tika-config.xml /src/
 
 ENV CASR_SOURCE_DIRS /tika
 

@@ -35,7 +35,7 @@ CURRENT_VERSION=$($MVN org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate
 # copied to target/lib by maven-dependency-plugin during package.
 cp "tika-app/target/tika-app-$CURRENT_VERSION.jar" $OUT/tika.jar
 cp tika-app/target/lib/*.jar $OUT/
-cp $SRC/tika-config.xml $SRC/log4j2.xml $OUT/
+cp $SRC/tika-config.xml $OUT/
 
 # JaCoCo aborts the whole coverage report when two class files share a name
 # but differ, which is exactly what a Multi-Release jar holds:

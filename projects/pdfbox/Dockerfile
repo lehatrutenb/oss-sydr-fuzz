@@ -26,7 +26,7 @@ RUN rm -rf fuzzing
 RUN true && until git clone https://github.com/apache/pdfbox pdfbox; do sleep 30; done
 
 COPY build.sh /pdfbox
-COPY *.java log4j2.xml /src/
+COPY *.java /src/
 
 ENV CASR_SOURCE_DIRS /pdfbox/pdfbox/src/main/java:/pdfbox/fontbox/src/main/java:/pdfbox/io/src/main/java
 

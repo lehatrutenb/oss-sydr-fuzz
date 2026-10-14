@@ -38,7 +38,6 @@ $MVN dependency:copy -Dartifact=org.apache.logging.log4j:log4j-api:2.24.3 -Doutp
 $MVN dependency:copy -Dartifact=org.apache.logging.log4j:log4j-core:2.24.3 -DoutputDirectory=$OUT/
 mv $OUT/log4j-api-2.24.3.jar $OUT/log4j-api.jar
 mv $OUT/log4j-core-2.24.3.jar $OUT/log4j-core.jar
-cp $SRC/log4j2.xml $OUT/
 
 # JaCoCo aborts the whole coverage report when two class files share a name
 # but differ, which is exactly what a Multi-Release jar holds:
