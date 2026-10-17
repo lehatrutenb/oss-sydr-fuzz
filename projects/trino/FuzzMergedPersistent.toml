@@ -1,0 +1,38 @@
+# Copyright 2026 ISP RAS
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+################################################################################
+
+[jazzer]
+target_class = "FuzzMergedPersistent"
+args = "--cp=/out:/out/antlr4-runtime.jar:/out/checker-qual.jar:/out/error_prone_annotations.jar:/out/failureaccess.jar:/out/guava.jar:/out/j2objc-annotations.jar:/out/jakarta.annotation-api.jar:/out/jsr305.jar:/out/trino-grammar.jar:/out/trino-parser.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/corpus-FuzzMergedPersistent"
+
+[swat]
+java = "/jdk/bin/java"
+swat = "/swat/jar/swat.jar"
+args = "-Xmx32g -cp /out:/out/antlr4-runtime.jar:/out/checker-qual.jar:/out/error_prone_annotations.jar:/out/failureaccess.jar:/out/guava.jar:/out/j2objc-annotations.jar:/out/jakarta.annotation-api.jar:/out/jsr305.jar:/out/trino-grammar.jar:/out/trino-parser.jar:$SWAT_TEMPLATES -Djava.library.path=/swat/libs/java-library-path"
+jobs = 2
+target_class = "FuzzMergedPersistent"
+
+[swat.config]
+logging.classes="false"
+logging.level="INFO"
+
+instrumentation.transformer="PARAMETER"
+instrumentation.parameter.symbolicPattern="FuzzMergedPersistent:fuzzerTestOneInput"
+instrumentation.includePackages="FuzzMergedPersistent:StatementFuzzer:ExpressionFuzzer:TypeFuzzer:io/trino/grammar:io/trino/sql/jsonpath:io/trino/sql/testing"
+
+solver.solver="(Z3,0.3):(CVC5,0.7)"
+solver.timeoutMS="(10000,0.4):(30000,0.4):(60000,0.2)"
+solver.solveHidden="(false,0.7):(true,0.3)"

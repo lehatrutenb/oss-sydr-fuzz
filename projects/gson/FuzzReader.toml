@@ -30,7 +30,7 @@ logging.level="INFO"
 
 instrumentation.transformer="PARAMETER"
 instrumentation.parameter.symbolicPattern="FuzzReader:fuzzerTestOneInput"
-instrumentation.includePackages="FuzzReader:com/google/gson"
+instrumentation.includePackages="FuzzReader:com/google/gson/stream:com/google/gson/internal/bind:com/google/gson/internal/reflect:com/google/gson/internal/sql:com/google/gson/reflect:com/google/gson/annotations"
 
 solver.solver="(Z3,0.3):(CVC5,0.7)"
 solver.timeoutMS="(10000,0.4):(30000,0.4):(60000,0.2)"

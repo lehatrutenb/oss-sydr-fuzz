@@ -1,5 +1,4 @@
-// Copyright 2021 Google LLC
-// Modifications copyright (C) 2026 ISP RAS
+// Copyright 2026 ISP RAS
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,16 +18,23 @@ import java.io.IOException;
 
 import de.uzl.its.swat.templates.PersistentMode;
 
-public class FuzzReaderPersistent {
+public class FuzzMergedPersistent {
   public static String[] args;
 
+  private static final int TARGETS = 3;
+
   public static void main(String[] args) {
-    FuzzReaderPersistent.args = args;
+    FuzzMergedPersistent.args = args;
     fuzzerTestOneInput("");
   }
 
-  public static void fuzzerTestOneInput(String _input) {
-    for (String path : FuzzReaderPersistent.args) {
+  public static void fuzzerTestOneInput(String data) {
+    if (FuzzMergedPersistent.args == null) {
+      dispatch(data);
+      return;
+    }
+
+    for (String path : FuzzMergedPersistent.args) {
       String input;
       try {
         input = PersistentMode.readString(path, true);
@@ -40,10 +46,32 @@ public class FuzzReaderPersistent {
         continue;
       }
       try {
-        FuzzReader.fuzzerTestOneInput(input);
+        dispatch(input);
       } finally {
         PersistentMode.dumpAndCleanSymbolicState();
       }
+    }
+  }
+
+  private static void dispatch(String data) {
+    if (data == null || data.length() < 1) {
+      return;
+    }
+
+    String payload = data.substring(1);
+
+    switch (data.charAt(0) % TARGETS) {
+      case 0:
+        ExpressionParseFuzzer.fuzzerTestOneInput(payload);
+        break;
+      case 1:
+        RestrictedEvalFuzzer.fuzzerTestOneInput(payload);
+        break;
+      case 2:
+        ExpressionRoundTripFuzzer.fuzzerTestOneInput(payload);
+        break;
+      default:
+        break;
     }
   }
 }

@@ -30,7 +30,8 @@ RUN true && until git clone https://github.com/google/gson gson; do sleep 30; do
 
 COPY build.sh /gson
 COPY FuzzParse.java FuzzReader.java FuzzStreamParser.java \
-     FuzzReaderPersistent.java /src/
+     FuzzMergedPersistent.java FuzzBean.java FuzzInner.java \
+     FuzzColor.java FuzzTypes.java /src/
 
 ENV CASR_SOURCE_DIRS /gson/gson/src/main/java/
 

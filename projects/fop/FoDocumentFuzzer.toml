@@ -1,0 +1,37 @@
+# Copyright 2025 ISP RAS
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+################################################################################
+
+[jazzer]
+target_class = "FoDocumentFuzzer"
+args = "--cp=/out:/out/batik-anim.jar:/out/batik-awt-util.jar:/out/batik-bridge.jar:/out/batik-codec.jar:/out/batik-constants.jar:/out/batik-css.jar:/out/batik-dom.jar:/out/batik-ext.jar:/out/batik-extension.jar:/out/batik-gvt.jar:/out/batik-i18n.jar:/out/batik-parser.jar:/out/batik-script.jar:/out/batik-shared-resources.jar:/out/batik-svg-dom.jar:/out/batik-svggen.jar:/out/batik-transcoder.jar:/out/batik-util.jar:/out/batik-xml.jar:/out/commons-io.jar:/out/commons-logging.jar:/out/fontbox.jar:/out/fop-core.jar:/out/fop-events.jar:/out/fop-util.jar:/out/pdfbox-io.jar:/out/qdox.jar:/out/xml-apis-ext.jar:/out/xml-apis.jar:/out/xmlgraphics-commons.jar -jobs=1000 -workers=4 -rss_limit_mb=4096 /out/corpus-FoDocumentFuzzer"
+
+[swat]
+java = "/jdk/bin/java"
+swat = "/swat/jar/swat.jar"
+args = "-Xmx32g -Djava.library.path=/swat/libs/java-library-path"
+jobs = 2
+
+[swat.config]
+logging.classes="false"
+logging.level="INFO"
+
+instrumentation.transformer="PARAMETER"
+instrumentation.parameter.symbolicPattern="FoDocumentFuzzer:fuzzerTestOneInput"
+instrumentation.includePackages="FoDocumentFuzzer:org/apache/fop"
+
+solver.solver="(Z3,0.3):(CVC5,0.7)"
+solver.timeoutMS="(10000,0.4):(30000,0.4):(60000,0.2)"
+solver.solveHidden="(false,0.5):(true,0.5)"
