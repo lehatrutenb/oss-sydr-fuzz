@@ -48,9 +48,13 @@ ALL_JARS="jjwt-api.jar jjwt-impl.jar jjwt-gson.jar gson.jar"
 BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):$JAZZER_API_PATH:$SWAT_TEMPLATES
 RUNTIME_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "\$this_dir/%s:"):\$this_dir
 
-for fuzzer in $(find $SRC -name '*Fuzzer.java'); do
+for fuzzer in $(find $SRC -maxdepth 1 -name '*.java'); do
   fuzzer_basename=$(basename -s .java $fuzzer)
-  javac -cp "$BUILD_CLASSPATH:$SRC" $fuzzer
+  if [[ "$fuzzer" == *"JavaFuzz"* ]]; then
+      javac --release 14 -cp "$BUILD_CLASSPATH:$SRC:$OUT/javafuzz-core.jar" $fuzzer
+  else
+      javac -cp "$BUILD_CLASSPATH:$SRC" $fuzzer
+  fi
   cp $SRC/$fuzzer_basename.class $OUT/
 done
 

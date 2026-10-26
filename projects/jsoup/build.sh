@@ -80,10 +80,19 @@ echo "==> javac FuzzMergedPersistent"
 javac -encoding UTF-8 -cp "$BUILD_CLASSPATH:$SRC" "$SRC/FuzzMergedPersistent.java"
 cp "$SRC/FuzzMergedPersistent.class" "$OUT/"
 
+echo "==> javac FuzzMergedCoverage"
+javac -encoding UTF-8 -cp "$BUILD_CLASSPATH:$SRC" "$SRC/FuzzMergedCoverage.java"
+cp "$SRC/FuzzMergedCoverage.class" "$OUT/"
+
+echo "==> javac FuzzMergedJavaFuzz"
+javac --release 14 -encoding UTF-8 \
+  -cp "$BUILD_CLASSPATH:$SRC:$OUT/javafuzz-core.jar" "$SRC/FuzzMergedJavaFuzz.java"
+cp "$SRC/FuzzMergedJavaFuzz.class" "$OUT/"
+
 echo "==> class files in $OUT:"
 ls -la "$OUT"/*.class
 
-for required in HtmlFuzzer XmlFuzzer CleanFuzzer SelectorFuzzer CssHtmlFuzzer FragmentHtmlFuzzer FuzzMerged FuzzMergedPersistent; do
+for required in HtmlFuzzer XmlFuzzer CleanFuzzer SelectorFuzzer CssHtmlFuzzer FragmentHtmlFuzzer FuzzMerged FuzzMergedPersistent FuzzMergedCoverage FuzzMergedJavaFuzz; do
   if [ ! -f "$OUT/$required.class" ]; then
     echo "ERROR: missing $OUT/$required.class" >&2
     exit 1

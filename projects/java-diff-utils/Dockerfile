@@ -23,6 +23,8 @@ RUN true && until git clone https://github.com/java-diff-utils/java-diff-utils j
 
 COPY build.sh /java-diff-utils
 COPY DiffUtilsFuzzer.java /src
+COPY DiffUtilsJavaFuzz.java /src
+COPY DiffUtilsCoverage.java /src
 
 ENV CASR_SOURCE_DIRS /java-diff-utils/java-diff-utils/src/main/java/
 

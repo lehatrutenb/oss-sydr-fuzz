@@ -25,6 +25,8 @@ COPY build.sh /joda-time
 
 COPY InstantFuzzer.java /src/
 COPY TimeFuzzer.java /src/
+COPY TimeJavaFuzz.java /src/
+COPY TimeCoverage.java /src/
 
 ENV CASR_SOURCE_DIRS /joda-time/src/main/java 
 

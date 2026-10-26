@@ -33,7 +33,8 @@ RUN true && until git clone --depth 1 https://github.com/dvyukov/go-fuzz-corpus;
 RUN true && until git clone https://github.com/OWASP/json-sanitizer /json-sanitizer; do sleep 30; done
 
 COPY build.sh /json-sanitizer
-COPY DenylistFuzzer.java IdempotenceFuzzer.java ValidJsonFuzzer.java /
+COPY DenylistFuzzer.java IdempotenceFuzzer.java ValidJsonFuzzer.java \
+     DenylistJavaFuzz.java DenylistCoverage.java /
 
 ENV CASR_SOURCE_DIRS /json-sanitizer/src/main/java:/out/gson-2.8.6-src/
 

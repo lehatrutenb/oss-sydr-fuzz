@@ -42,10 +42,14 @@ BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):/usr/local/lib/ja
 # All .jar and .class files lie in the same directory as the fuzzer at runtime.
 RUNTIME_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "\$this_dir/%s:"):\$this_dir
 
-for fuzzer in $(find $SRC -name '*Fuzzer.java')
+for fuzzer in $(find $SRC -maxdepth 1 -name '*.java')
 do
   fuzzer_basename=$(basename -s .java $fuzzer)
-  javac -cp $BUILD_CLASSPATH $fuzzer
+  if [[ "$fuzzer" == *"JavaFuzz"* ]]; then
+      javac --release 14 -cp "$BUILD_CLASSPATH:$SRC:$OUT/javafuzz-core.jar" $fuzzer
+  else
+      javac -cp "$BUILD_CLASSPATH:$SRC" $fuzzer
+  fi
   cp $SRC/$fuzzer_basename.class $OUT/
 done
 

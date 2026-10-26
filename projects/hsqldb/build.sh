@@ -40,7 +40,10 @@ BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):/usr/local/lib/ja
 RUNTIME_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "\$this_dir/%s:"):\$this_dir
 
 # compile all java files and copy them to $OUT
-javac -cp $SRC:$BUILD_CLASSPATH -g $SRC/*.java
+javac -cp $SRC:$BUILD_CLASSPATH -g \
+  $(find $SRC -maxdepth 1 -name '*.java' -not -name '*JavaFuzz.java')
+javac --release 14 -cp "$SRC:$BUILD_CLASSPATH:$OUT/javafuzz-core.jar" -g \
+  $(find $SRC -maxdepth 1 -name '*JavaFuzz.java')
 cp $SRC/*.class $OUT/
 
 # generate jazzer start script

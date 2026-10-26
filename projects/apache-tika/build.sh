@@ -73,7 +73,10 @@ fi
 
 BUILD_CLASSPATH=$(printf '%s:' $OUT/*.jar)$JAZZER_API_PATH:$SWAT_TEMPLATES
 
-javac -encoding UTF-8 -cp $BUILD_CLASSPATH $(find $SRC -maxdepth 1 -name '*.java')
+javac -encoding UTF-8 -cp $BUILD_CLASSPATH \
+  $(find $SRC -maxdepth 1 -name '*.java' -not -name '*JavaFuzz.java')
+javac --release 14 -encoding UTF-8 -cp "$BUILD_CLASSPATH:$SRC:$OUT/javafuzz-core.jar" \
+  $(find $SRC -maxdepth 1 -name '*JavaFuzz.java')
 cp $SRC/*.class $OUT/
 
 echo "==> class files in $OUT:"

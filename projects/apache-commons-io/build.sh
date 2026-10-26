@@ -55,5 +55,8 @@ JAZZER_API_PATH=/usr/local/lib/jazzer_standalone_deploy.jar
 ALL_JARS="commons-io.jar"
 BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):$JAZZER_API_PATH
 
-javac -encoding UTF-8 -cp $BUILD_CLASSPATH $(find $SRC -maxdepth 1 -name '*.java')
+javac -encoding UTF-8 -cp $BUILD_CLASSPATH \
+  $(find $SRC -maxdepth 1 -name '*.java' -not -name '*JavaFuzz.java')
+javac --release 14 -encoding UTF-8 -cp "$BUILD_CLASSPATH:$SRC:$OUT/javafuzz-core.jar" \
+  $(find $SRC -maxdepth 1 -name '*JavaFuzz.java')
 cp $SRC/*.class $OUT/

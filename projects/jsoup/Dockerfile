@@ -47,7 +47,8 @@ RUN true && until git clone https://github.com/jhy/jsoup jsoup; do sleep 30; don
 COPY build.sh /jsoup/build.sh
 COPY HtmlFuzzer.java XmlFuzzer.java CleanFuzzer.java SelectorFuzzer.java \
      CssHtmlFuzzer.java FragmentHtmlFuzzer.java FuzzMerged.java \
-     FuzzMergedPersistent.java /src/
+     FuzzMergedPersistent.java FuzzMergedJavaFuzz.java \
+     FuzzMergedCoverage.java /src/
 
 ENV CASR_SOURCE_DIRS /jsoup/src/main/java/
 
