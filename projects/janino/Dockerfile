@@ -24,6 +24,8 @@ RUN true && until git clone https://github.com/janino-compiler/janino.git janino
 COPY build.sh /janino
 COPY ExpressionEvaluatorFuzzer.java /src/
 COPY ExpressionEvaluatorPersistentFuzzer.java /src/
+COPY ExpressionEvaluatorJavaFuzz.java /src/
+COPY ExpressionEvaluatorCoverage.java /src/
 
 ENV CASR_SOURCE_DIRS /janino/janino/src/main/java/
 

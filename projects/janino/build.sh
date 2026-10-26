@@ -40,9 +40,13 @@ RUNTIME_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "\$this_dir/%s:"):\$this_di
 
 mkdir $OUT/corpus
 
-for fuzzer in $(find $SRC -name '*Fuzzer.java'); do
+for fuzzer in $(find $SRC -maxdepth 1 -name '*.java'); do
   fuzzer_basename=$(basename -s .java $fuzzer)
-  javac -cp "$BUILD_CLASSPATH:$SRC" $fuzzer
+  if [[ "$fuzzer" == *"JavaFuzz"* ]]; then
+      javac --release 14 -cp "$BUILD_CLASSPATH:$SRC:$OUT/javafuzz-core.jar" $fuzzer
+  else
+      javac -cp "$BUILD_CLASSPATH:$SRC" $fuzzer
+  fi
   cp $SRC/$fuzzer_basename.class $OUT/
   # Build corpus
   cp $fuzzer $OUT/corpus/
