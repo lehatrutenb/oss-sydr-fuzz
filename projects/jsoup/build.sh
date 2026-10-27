@@ -28,7 +28,7 @@ rm apache-maven-*-bin.tar.gz
 mv apache-maven-* /opt/
 
 MVN=$(ls -d /opt/apache-maven-*/bin/mvn)
-MAVEN_ARGS="-Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Danimal.sniffer.skip=true -Djapicmp.skip=true"
+MAVEN_ARGS="-Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Danimal.sniffer.skip=true -Djapicmp.skip=true -Djavac.src.version=14 -Djavac.target.version=14"
 $MVN --batch-mode package ${MAVEN_ARGS}
 CURRENT_VERSION=$($MVN org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate \
  -Dexpression=project.version -q -DforceStdout)
@@ -68,20 +68,20 @@ BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):$JAZZER_API_PATH:
 for fuzzer in $(find "$SRC" -maxdepth 1 -name '*Fuzzer.java' | sort); do
   fuzzer_basename=$(basename -s .java "$fuzzer")
   echo "==> javac $fuzzer_basename"
-  javac -encoding UTF-8 -cp "$BUILD_CLASSPATH:$SRC" "$fuzzer"
+  javac --release 14 -encoding UTF-8 -cp "$BUILD_CLASSPATH:$SRC" "$fuzzer"
   cp "$SRC/$fuzzer_basename.class" "$OUT/"
 done
 
 echo "==> javac FuzzMerged"
-javac -encoding UTF-8 -cp "$BUILD_CLASSPATH:$SRC" "$SRC/FuzzMerged.java"
+javac --release 14 -encoding UTF-8 -cp "$BUILD_CLASSPATH:$SRC" "$SRC/FuzzMerged.java"
 cp "$SRC/FuzzMerged.class" "$OUT/"
 
 echo "==> javac FuzzMergedPersistent"
-javac -encoding UTF-8 -cp "$BUILD_CLASSPATH:$SRC" "$SRC/FuzzMergedPersistent.java"
+javac --release 14 -encoding UTF-8 -cp "$BUILD_CLASSPATH:$SRC" "$SRC/FuzzMergedPersistent.java"
 cp "$SRC/FuzzMergedPersistent.class" "$OUT/"
 
 echo "==> javac FuzzMergedCoverage"
-javac -encoding UTF-8 -cp "$BUILD_CLASSPATH:$SRC" "$SRC/FuzzMergedCoverage.java"
+javac --release 14 -encoding UTF-8 -cp "$BUILD_CLASSPATH:$SRC" "$SRC/FuzzMergedCoverage.java"
 cp "$SRC/FuzzMergedCoverage.class" "$OUT/"
 
 echo "==> javac FuzzMergedJavaFuzz"

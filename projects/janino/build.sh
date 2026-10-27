@@ -27,7 +27,7 @@ mv apache-maven-* /opt/
 
 MVN=$(ls -d /opt/apache-maven-*/bin/mvn)
 cd janino-parent
-MAVEN_ARGS="-DskipTests -Djavac.src.version=17 -Djavac.target.version=17 -Dmaven.javadoc.skip=true"
+MAVEN_ARGS="-DskipTests -Djavac.src.version=14 -Djavac.target.version=14 -Dmaven.javadoc.skip=true"
 $MVN package org.apache.maven.plugins:maven-shade-plugin:3.2.4:shade $MAVEN_ARGS
 CURRENT_VERSION=$($MVN org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate \
  -Dexpression=project.version -q -DforceStdout)
@@ -42,11 +42,7 @@ mkdir $OUT/corpus
 
 for fuzzer in $(find $SRC -maxdepth 1 -name '*.java'); do
   fuzzer_basename=$(basename -s .java $fuzzer)
-  if [[ "$fuzzer" == *"JavaFuzz"* ]]; then
-      javac --release 14 -cp "$BUILD_CLASSPATH:$SRC:$OUT/javafuzz-core.jar" $fuzzer
-  else
-      javac -cp "$BUILD_CLASSPATH:$SRC" $fuzzer
-  fi
+  javac --release 14 -cp "$BUILD_CLASSPATH:$SRC:$OUT/javafuzz-core.jar" $fuzzer
   cp $SRC/$fuzzer_basename.class $OUT/
   # Build corpus
   cp $fuzzer $OUT/corpus/

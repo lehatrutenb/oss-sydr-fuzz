@@ -26,7 +26,7 @@ mv apache-maven-* /opt/
 sed -i 's/1.5</1.7</g' pom.xml
 
 MVN=$(ls -d /opt/apache-maven-*/bin/mvn)
-MAVEN_ARGS="-Djavac.src.version=17 -Djavac.target.version=17 -DskipTests"
+MAVEN_ARGS="-Djavac.src.version=14 -Djavac.target.version=14 -DskipTests"
 $MVN package $MAVEN_ARGS
 CURRENT_VERSION=$($MVN org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate \
  -Dexpression=project.version -q -DforceStdout)
@@ -50,11 +50,7 @@ RUNTIME_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "\$this_dir/%s:"):\$this_di
 
 for fuzzer in $(find $SRC -maxdepth 1 -name '*.java'); do
   fuzzer_basename=$(basename -s .java $fuzzer)
-  if [[ "$fuzzer" == *"JavaFuzz"* ]]; then
-      javac --release 14 -cp "$BUILD_CLASSPATH:$SRC:$OUT/javafuzz-core.jar" $fuzzer
-  else
-      javac -cp "$BUILD_CLASSPATH:$SRC" $fuzzer
-  fi
+  javac --release 14 -cp "$BUILD_CLASSPATH:$SRC:$OUT/javafuzz-core.jar" $fuzzer
   cp $SRC/$fuzzer_basename.class $OUT/
 done
 

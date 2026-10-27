@@ -26,6 +26,7 @@ COPY ExpressionEvaluatorFuzzer.java /src/
 COPY ExpressionEvaluatorPersistentFuzzer.java /src/
 COPY ExpressionEvaluatorJavaFuzz.java /src/
 COPY ExpressionEvaluatorCoverage.java /src/
+COPY jacocoagent-exp.jar javafuzz-core.jar /out/
 
 ENV CASR_SOURCE_DIRS /janino/janino/src/main/java/
 

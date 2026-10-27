@@ -24,6 +24,7 @@ RUN true && until git clone https://github.com/jwtk/jjwt.git jjwt; do sleep 30; 
 COPY build.sh /jjwt
 COPY TokenParserFuzzer.java TokenParserPersistentFuzzer.java \
      TokenParserJavaFuzz.java TokenParserCoverage.java /src/
+COPY jacocoagent-exp.jar javafuzz-core.jar /out/
 
 ENV CASR_SOURCE_DIRS=/jjwt/api/src/main/java:/jjwt/impl/src/main/java
 

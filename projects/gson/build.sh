@@ -24,7 +24,7 @@ rm apache-maven-*-bin.tar.gz
 mv apache-maven-* /opt/
 
 MVN=$(ls -d /opt/apache-maven-*/bin/mvn)
-MAVEN_ARGS="-DskipTests -Dproguard.skip"
+MAVEN_ARGS="-DskipTests -Dproguard.skip -Djavac.src.version=14 -Djavac.target.version=14"
 # Only build 'gson' Maven module
 cd gson
 $MVN --batch-mode --update-snapshots package ${MAVEN_ARGS}
@@ -37,10 +37,6 @@ RUNTIME_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "\$this_dir/%s:"):.:\$this_
 
 for fuzzer in $(find $SRC -maxdepth 1 -name '*.java'); do
   fuzzer_basename=$(basename -s .java $fuzzer)
-  if [[ "$fuzzer" == *"JavaFuzz"* ]]; then
-      javac --release 14 -cp "$BUILD_CLASSPATH:$SRC:$OUT/javafuzz-core.jar" $fuzzer
-  else
-      javac -cp "$BUILD_CLASSPATH:$SRC" $fuzzer
-  fi
+  javac --release 14 -cp "$BUILD_CLASSPATH:$SRC:$OUT/javafuzz-core.jar" $fuzzer
   cp $SRC/$fuzzer_basename.class $OUT/
 done

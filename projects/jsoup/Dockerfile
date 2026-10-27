@@ -49,6 +49,7 @@ COPY HtmlFuzzer.java XmlFuzzer.java CleanFuzzer.java SelectorFuzzer.java \
      CssHtmlFuzzer.java FragmentHtmlFuzzer.java FuzzMerged.java \
      FuzzMergedPersistent.java FuzzMergedJavaFuzz.java \
      FuzzMergedCoverage.java /src/
+COPY jacocoagent-exp.jar javafuzz-core.jar /out/
 
 ENV CASR_SOURCE_DIRS /jsoup/src/main/java/
 
