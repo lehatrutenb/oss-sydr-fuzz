@@ -25,7 +25,8 @@ rm apache-maven-*-bin.tar.gz
 mv apache-maven-* /opt/
 
 MVN=$(ls -d /opt/apache-maven-*/bin/mvn)
-MAVEN_ARGS="-DskipTests -Dmaven.javadoc.skip=true -Drat.skip=true -am -pl :pdfbox"
+MAVEN_ARGS="-DskipTests -Dmaven.javadoc.skip=true -Drat.skip=true -am -pl :pdfbox \
+  -Djavac.src.version=14 -Djavac.target.version=14"
 $MVN --batch-mode install $MAVEN_ARGS
 CURRENT_VERSION=$($MVN org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate \
  -Dexpression=project.version -q -DforceStdout)
@@ -58,10 +59,8 @@ JAZZER_API_PATH=/usr/local/lib/jazzer_standalone_deploy.jar
 ALL_JARS="pdfbox.jar fontbox.jar pdfbox-io.jar log4j-api.jar log4j-core.jar"
 BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):$JAZZER_API_PATH
 
-javac -encoding UTF-8 -cp $BUILD_CLASSPATH \
-  $(find $SRC -maxdepth 1 -name '*.java' -not -name '*JavaFuzz.java')
 javac --release 14 -encoding UTF-8 -cp "$BUILD_CLASSPATH:$SRC:$OUT/javafuzz-core.jar" \
-  $(find $SRC -maxdepth 1 -name '*JavaFuzz.java')
+  $(find $SRC -maxdepth 1 -name '*.java')
 cp $SRC/*.class $OUT/
 
 MAX_SEED_SIZE=2097152c

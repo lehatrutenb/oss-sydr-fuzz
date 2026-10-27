@@ -30,7 +30,8 @@ MVN=$(ls -d /opt/apache-maven-*/bin/mvn)
 MAVEN_ARGS="-Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Drat.skip=true \
   -Danimal.sniffer.skip=true -Djapicmp.skip=true -Dcheckstyle.skip -Dspotbugs.skip \
   -Dpmd.skip=true -Dcpd.skip=true -Dossindex.skip=true \
-  -Dcommons.spdx.version=1.0.4 -Dspdx.skip=true"
+  -Dcommons.spdx.version=1.0.4 -Dspdx.skip=true \
+  -Djavac.src.version=14 -Djavac.target.version=14"
 $MVN --batch-mode package org.apache.maven.plugins:maven-shade-plugin:3.5.1:shade ${MAVEN_ARGS}
 CURRENT_VERSION=$($MVN org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate \
  -Dexpression=project.version -q -DforceStdout)
@@ -54,8 +55,6 @@ done
 ALL_JARS="commons-compress.jar"
 BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):$JAZZER_API_PATH:$SWAT_TEMPLATES
 
-javac -encoding UTF-8 -cp $BUILD_CLASSPATH \
-  $(find $SRC -maxdepth 1 -name '*.java' -not -name '*JavaFuzz.java')
 javac --release 14 -encoding UTF-8 -cp "$BUILD_CLASSPATH:$SRC:$OUT/javafuzz-core.jar" \
-  $(find $SRC -maxdepth 1 -name '*JavaFuzz.java')
+  $(find $SRC -maxdepth 1 -name '*.java')
 cp $SRC/*.class $OUT/

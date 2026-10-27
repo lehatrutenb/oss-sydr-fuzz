@@ -23,6 +23,7 @@ RUN true && until git clone https://github.com/apache/xmlgraphics-fop fop; do sl
 
 COPY build.sh build_seeds.sh /fop
 COPY *.java /src/
+COPY jacocoagent-exp.jar javafuzz-core.jar /out/
 
 ENV CASR_SOURCE_DIRS /libsrc
 

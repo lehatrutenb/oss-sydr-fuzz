@@ -35,6 +35,7 @@ RUN true && until git clone https://github.com/OWASP/json-sanitizer /json-saniti
 COPY build.sh /json-sanitizer
 COPY DenylistFuzzer.java IdempotenceFuzzer.java ValidJsonFuzzer.java \
      DenylistJavaFuzz.java DenylistCoverage.java /
+COPY jacocoagent-exp.jar javafuzz-core.jar /out/
 
 ENV CASR_SOURCE_DIRS /json-sanitizer/src/main/java:/out/gson-2.8.6-src/
 

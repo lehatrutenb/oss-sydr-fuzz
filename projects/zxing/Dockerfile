@@ -23,6 +23,7 @@ RUN true && until git clone https://github.com/zxing/zxing zxing; do sleep 30; d
 
 COPY build.sh build_seeds.sh /zxing
 COPY *.java /src/
+COPY jacocoagent-exp.jar javafuzz-core.jar /out/
 
 ENV CASR_SOURCE_DIRS /libsrc
 

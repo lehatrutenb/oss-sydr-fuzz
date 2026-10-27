@@ -29,6 +29,7 @@ RUN true && until git clone https://github.com/apache/commons-io commons-io; do 
 
 COPY build.sh build_seeds.sh /commons-io
 COPY *.java /src/
+COPY jacocoagent-exp.jar javafuzz-core.jar /out/
 
 ENV CASR_SOURCE_DIRS /commons-io/src/main/java
 

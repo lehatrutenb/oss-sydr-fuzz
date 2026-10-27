@@ -23,6 +23,7 @@ RUN true && until git clone https://github.com/xdrop/fuzzywuzzy fuzzywuzzy; do s
 
 COPY build.sh /fuzzywuzzy
 COPY *.java /src/
+COPY jacocoagent-exp.jar javafuzz-core.jar /out/
 
 ENV CASR_SOURCE_DIRS /fuzzywuzzy/diffutils/src/:/fuzzywuzzy/src/
 

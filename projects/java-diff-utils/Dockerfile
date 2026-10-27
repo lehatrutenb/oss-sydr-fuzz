@@ -25,6 +25,7 @@ COPY build.sh /java-diff-utils
 COPY DiffUtilsFuzzer.java /src
 COPY DiffUtilsJavaFuzz.java /src
 COPY DiffUtilsCoverage.java /src
+COPY jacocoagent-exp.jar javafuzz-core.jar /out/
 
 ENV CASR_SOURCE_DIRS /java-diff-utils/java-diff-utils/src/main/java/
 

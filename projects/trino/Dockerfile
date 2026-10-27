@@ -23,6 +23,7 @@ RUN true && until git clone https://github.com/trinodb/trino trino; do sleep 30;
 
 COPY build.sh build_seeds.sh /trino
 COPY *.java /src/
+COPY jacocoagent-exp.jar javafuzz-core.jar /out/
 
 ENV CASR_SOURCE_DIRS /libsrc
 

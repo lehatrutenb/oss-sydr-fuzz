@@ -27,6 +27,7 @@ COPY InstantFuzzer.java /src/
 COPY TimeFuzzer.java /src/
 COPY TimeJavaFuzz.java /src/
 COPY TimeCoverage.java /src/
+COPY jacocoagent-exp.jar javafuzz-core.jar /out/
 
 ENV CASR_SOURCE_DIRS /joda-time/src/main/java 
 

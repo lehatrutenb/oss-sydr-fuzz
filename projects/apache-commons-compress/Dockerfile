@@ -31,6 +31,7 @@ RUN true && until git clone https://github.com/apache/commons-compress commons-c
 
 COPY build.sh build_seeds.sh /commons-compress
 COPY *.java /src/
+COPY jacocoagent-exp.jar javafuzz-core.jar /out/
 
 ENV CASR_SOURCE_DIRS /commons-compress/src/main/java
 

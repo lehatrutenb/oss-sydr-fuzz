@@ -23,6 +23,7 @@ RUN true && until git clone https://github.com/unicode-org/icu icu4j; do sleep 3
 
 COPY build.sh build_seeds.sh /icu4j
 COPY *.java /src/
+COPY jacocoagent-exp.jar javafuzz-core.jar /out/
 
 ENV CASR_SOURCE_DIRS /libsrc
 

@@ -27,6 +27,7 @@ RUN true && until git clone https://github.com/apache/pdfbox pdfbox; do sleep 30
 
 COPY build.sh /pdfbox
 COPY *.java /src/
+COPY jacocoagent-exp.jar javafuzz-core.jar /out/
 
 ENV CASR_SOURCE_DIRS /pdfbox/pdfbox/src/main/java:/pdfbox/fontbox/src/main/java:/pdfbox/io/src/main/java
 

@@ -26,6 +26,7 @@ mv apache-maven-* /opt/
 MVN=$(ls -d /opt/apache-maven-*/bin/mvn)
 $MVN clean package -Dmaven.javadoc.skip=true -DskipTests=true -Dpmd.skip=true \
     -Dencoding=UTF-8 -Dmaven.antrun.skip=true -Dcheckstyle.skip=true \
+    -Djavac.src.version=14 -Djavac.target.version=14 \
     -Denforcer.fail=false org.apache.maven.plugins:maven-shade-plugin:3.2.4:shade
 CURRENT_VERSION=$($MVN org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate \
  -Dexpression=project.version -q -DforceStdout)
@@ -41,11 +42,7 @@ RUNTIME_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "\$this_dir/%s:"):\$this_di
 
 for fuzzer in $(find $SRC -maxdepth 1 -name '*.java'); do
   fuzzer_basename=$(basename -s .java $fuzzer)
-  if [[ "$fuzzer" == *"JavaFuzz"* ]]; then
-      javac --release 14 -cp "$BUILD_CLASSPATH:$SRC:$OUT/javafuzz-core.jar" $fuzzer
-  else
-      javac -cp "$BUILD_CLASSPATH:$SRC" $fuzzer
-  fi
+  javac --release 14 -cp "$BUILD_CLASSPATH:$SRC:$OUT/javafuzz-core.jar" $fuzzer
   cp $SRC/$fuzzer_basename.class $OUT/
 done
 

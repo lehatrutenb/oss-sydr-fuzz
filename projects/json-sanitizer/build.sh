@@ -28,7 +28,7 @@ export PATH="$PATH:$(ls -d /opt/apache-maven-*/bin)"
 export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 CURRENT_VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate \
 -Dexpression=project.version -q -DforceStdout)
-mvn package
+mvn package -Djavac.src.version=14 -Djavac.target.version=14
 cp "target/json-sanitizer-$CURRENT_VERSION.jar" $OUT/json-sanitizer.jar
 
 # The jar files containing the project (separated by spaces).
@@ -55,10 +55,6 @@ RUNTIME_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "\$this_dir/%s:"):.:\$this_
 
 for fuzzer in $(find $SRC -maxdepth 1 -name '*.java'); do
   fuzzer_basename=$(basename -s .java $fuzzer)
-  if [[ "$fuzzer" == *"JavaFuzz"* ]]; then
-      javac --release 14 -cp "$BUILD_CLASSPATH:$SRC:$OUT/javafuzz-core.jar" $fuzzer
-  else
-      javac -cp "$BUILD_CLASSPATH:$SRC" $fuzzer
-  fi
+  javac --release 14 -cp "$BUILD_CLASSPATH:$SRC:$OUT/javafuzz-core.jar" $fuzzer
   mv $SRC/$fuzzer_basename.class $OUT/
 done

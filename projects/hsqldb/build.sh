@@ -23,10 +23,10 @@ rm apache-ant-*-bin.tar.gz
 mv apache-ant-* /opt/
 ANT=$(ls -d /opt/apache-ant-*/bin/ant)
 
-mkdir $OUT
+mkdir -p $OUT
 
 pushd ${SRC}/hsqldb-svn/build
-$ANT -Dbuild.debug=true hsqldb
+$ANT -Dbuild.debug=true -Dant.build.javac.source=14 -Dant.build.javac.target=14 hsqldb
 cp ../lib/hsqldb.jar $OUT/
 popd
 
@@ -40,15 +40,13 @@ BUILD_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "$OUT/%s:"):/usr/local/lib/ja
 RUNTIME_CLASSPATH=$(echo $ALL_JARS | xargs printf -- "\$this_dir/%s:"):\$this_dir
 
 # compile all java files and copy them to $OUT
-javac -cp $SRC:$BUILD_CLASSPATH -g \
-  $(find $SRC -maxdepth 1 -name '*.java' -not -name '*JavaFuzz.java')
 javac --release 14 -cp "$SRC:$BUILD_CLASSPATH:$OUT/javafuzz-core.jar" -g \
-  $(find $SRC -maxdepth 1 -name '*JavaFuzz.java')
+  $(find $SRC -maxdepth 1 -name '*.java')
 cp $SRC/*.class $OUT/
 
 # generate jazzer start script
 for fuzzer in $(find $SRC -maxdepth 1 -name '*Fuzzer.java'); do
   fuzzer_basename=$(basename -s .java $fuzzer)
-  javac -cp $SRC:$BUILD_CLASSPATH $fuzzer
+  javac --release 14 -cp "$SRC:$BUILD_CLASSPATH:$OUT/javafuzz-core.jar" $fuzzer
   cp $SRC/$fuzzer_basename.class $OUT/
 done
