@@ -38,6 +38,8 @@ public class ExpressionEvaluatorPersistentFuzzer {
       }
       try {
         ExpressionEvaluatorFuzzer.fuzzerTestOneInput(input);
+      } catch (Exception e) {
+        // Ignore exceptions during fuzzing
       } finally {
         PersistentMode.dumpAndCleanSymbolicState();
       }

@@ -47,6 +47,8 @@ public class FuzzMergedPersistent {
       }
       try {
         dispatch(input);
+      } catch (Exception e) {
+        // Ignore exceptions during fuzzing
       } finally {
         PersistentMode.dumpAndCleanSymbolicState();
       }

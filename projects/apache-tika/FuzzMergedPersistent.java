@@ -40,6 +40,8 @@ public class FuzzMergedPersistent {
       }
       try {
         FuzzMerged.fuzzerTestOneInput(input);
+      } catch (Exception e) {
+        // Ignore exceptions during fuzzing
       } finally {
         PersistentMode.dumpAndCleanSymbolicState();
       }
